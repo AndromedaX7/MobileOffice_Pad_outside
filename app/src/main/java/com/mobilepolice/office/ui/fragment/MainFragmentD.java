@@ -51,6 +51,7 @@ import io.reactivex.schedulers.Schedulers;
  * time   : 2018/10/18
  * desc   : 项目界面跳转示例
  */
+@Deprecated
 public class MainFragmentD extends MyLazyFragment
         implements View.OnClickListener {
 

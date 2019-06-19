@@ -777,6 +777,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="10dp" />
         </LinearLayout>
+
         <!-- 添加日程-->
         <LinearLayout
             android:id="@+id/ll_rc_create"
@@ -933,11 +934,5 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
-        <com.mobilepolice.office.widget.StackLayout
-            android:id="@+id/viewStack"
-            android:layout_width="match_parent" android:visibility="gone"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>

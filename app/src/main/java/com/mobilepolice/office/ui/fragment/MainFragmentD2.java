@@ -160,27 +160,8 @@ public class MainFragmentD2 extends MyLazyFragment
      */
     @Override
     public void onClick(View v) {
-//
-//        if (v == img_cancel) {
-//            ll_mess.setVisibility(View.GONE);
-//            mRecyclerView.setVisibility(View.VISIBLE);
-//            clearMessData();
-//        } else if (v == class_id_01) {
-//            toast("保存成功！");
-//            ll_mess.setVisibility(View.GONE);
-//            mRecyclerView.setVisibility(View.VISIBLE);
-//            clearMessData();
-//        }
     }
 
-//    private void clearMessData() {
-//        tv_contacts_title.setText("");
-//        img_head.setImageResource(R.mipmap.img_default);
-//        tv_name.setText("");
-//        tv_title.setText("");
-//        et_cnotacts_phone.setText("");
-//        et_cnotacts_mail.setText("");
-//    }
 
     @Override
     public boolean isStatusBarEnabled() {

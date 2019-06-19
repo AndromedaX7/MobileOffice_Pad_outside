@@ -68,6 +68,7 @@ import static android.app.Activity.RESULT_OK;
  * time   : 2018/10/18
  * desc   : 可进行拷贝的副本
  */
+@Deprecated
 public class MainFragmentB1 extends MyLazyFragment {
 
 //    @BindView(R.id.tv_pendingapproval_title)
