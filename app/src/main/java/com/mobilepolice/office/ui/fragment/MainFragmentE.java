@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fish.timeline.TaskInfo;
 import com.fish.timeline.TimeLineController;
@@ -167,6 +168,8 @@ public class MainFragmentE extends MyLazyFragment
     RecyclerView rv_drafts_mRecyclerView;
 
 
+    @BindView(R.id.huiyiContent)
+    ImageView huiyiContent;
     @BindView(R.id.ll_rc_main)
     LinearLayout ll_rc_main;
     @BindView(R.id.lastMonth)
@@ -424,6 +427,8 @@ public class MainFragmentE extends MyLazyFragment
 
         ContactsView contactsView = new ContactsView(getContext());
         sContacts.addView(contactsView.getView());
+        //TODO  我的会议 图片在此设置
+        Glide.with(huiyiContent).load("http://b190.photo.store.qq.com/psb?/V142vzoQ02l6Tv/8rx*JJW8CXzphW*jg.liGO5vu.vZjn3rdzsMIA2sESU!/c/dL4AAAAAAAAA&bo=OAQ4BDgEOAQRECc!&rf=mood_app").into(huiyiContent);
     }
 
     private TimeLineController controller;

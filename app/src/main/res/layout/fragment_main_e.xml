@@ -80,6 +80,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:visibility="visible" />
+
             <TextView
                 android:id="@+id/tv_huiyi"
                 android:layout_width="match_parent"
@@ -92,6 +93,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:visibility="visible" />
+
             <TextView
                 android:id="@+id/tv_mail"
                 android:layout_width="match_parent"
@@ -947,14 +949,22 @@
 
         <FrameLayout
             android:id="@+id/sContacts"
-            android:layout_width="match_parent" android:visibility="gone"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:visibility="gone" />
 
         <FrameLayout
             android:id="@+id/sHuiyi"
-            android:layout_width="match_parent" android:visibility="gone"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/huiyiContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>
