@@ -14,11 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hjq.bar.TitleBar;
-import com.hjq.toast.ToastUtils;
 import com.mobilepolice.office.R;
 import com.mobilepolice.office.base.MyActivity;
-import com.mobilepolice.office.bean.LoopImageNewsBean;
 import com.mobilepolice.office.bean.NewsDetailBean;
 import com.mobilepolice.office.http.HttpConnectInterface;
 import com.mobilepolice.office.http.HttpTools;
@@ -33,7 +30,8 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 新闻列表
  */
-public class NewsDetailedActivity extends MyActivity {
+@Deprecated
+public class NewsDetailedActivity2 extends MyActivity {
 
 
     @BindView(R.id.leftButton)
@@ -72,6 +70,18 @@ public class NewsDetailedActivity extends MyActivity {
         String title = getIntent().getStringExtra("title");
         setTitle(title);
         leftButton.setOnClickListener(v -> finish());
+        ImageView agreeBtn = findViewById(R.id.agree);
+        agreeBtn.setOnClickListener(v -> {
+            int state = Integer.parseInt(v.getTag().toString());
+            ImageView imgBtn = (ImageView) v;
+            if (state == 0) {
+                imgBtn.setImageResource(R.drawable.admire_active);
+                v.setTag(1);
+            } else {
+                imgBtn.setImageResource(R.drawable.admire);
+                v.setTag(0);
+            }
+        });
     }
 
     private void initWebView() {

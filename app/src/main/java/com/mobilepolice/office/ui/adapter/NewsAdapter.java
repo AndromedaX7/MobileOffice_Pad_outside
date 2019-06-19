@@ -26,6 +26,7 @@ import com.mobilepolice.office.bean.PendingWorkBean;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import static android.view.View.INVISIBLE;
@@ -41,6 +42,7 @@ import static org.litepal.LitePalApplication.getContext;
  */
 public class NewsAdapter extends BaseQuickAdapter<NewsListBean, BaseViewHolder> {
     private int type;
+    private int idx=0;
 
     public NewsAdapter(int type) {
         super(R.layout.item_grid_news, null);
@@ -49,6 +51,7 @@ public class NewsAdapter extends BaseQuickAdapter<NewsListBean, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, NewsListBean item) {
+
 
         ImageView imageView = helper.getView(R.id.imageView);
         ImageOptions imageOptions = new ImageOptions.Builder()
@@ -84,8 +87,21 @@ public class NewsAdapter extends BaseQuickAdapter<NewsListBean, BaseViewHolder> 
             img_hot.setVisibility(View.GONE);
 //            imageView.setImageResource(R.mipmap.news_img2);
 //            Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.news_img2);
-            if (item.getImg() != null)
-                Glide.with(imageView).load(item.getImg().replaceAll("10.106.18.75:8081", "192.168.20.228:7124")).into(imageView);
+
+            Class<R.drawable> drawableClass = R.drawable.class;
+            try {
+                Field declaredField = drawableClass.getDeclaredField("news_" + (idx%4));
+                Glide.with(imageView).load( declaredField.get(null)).into(imageView);
+                idx++;
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+//            if (item.getImg() != null)
+//                Glide.with(imageView).load(item.getImg().replaceAll("10.106.18.75:8081", "192.168.20.228:7124")).into(imageView);
+
 //            imageView.setImageBitmap(xfermode(bitmap, 10));
 //            bitmap.recycle();
         }

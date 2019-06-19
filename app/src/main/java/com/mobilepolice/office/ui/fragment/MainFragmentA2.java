@@ -32,7 +32,6 @@ import com.mobilepolice.office.ui.adapter.NoticeAdapter;
 import com.mobilepolice.office.ui.change.ViewsAdapter;
 import com.mobilepolice.office.widget.RecycleViewDivider;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +46,8 @@ import io.reactivex.schedulers.Schedulers;
  * time   : 2018/10/18
  * desc   : 项目炫酷效果示例
  */
-public class MainFragmentA extends MyLazyFragment {
+@Deprecated
+public class MainFragmentA2 extends MyLazyFragment {
 
 
     @BindView(R.id.tb_title)
@@ -90,8 +90,8 @@ public class MainFragmentA extends MyLazyFragment {
     boolean flag = false;
     private Handler mHandler;
 
-    public static MainFragmentA newInstance() {
-        return new MainFragmentA();
+    public static MainFragmentA2 newInstance() {
+        return new MainFragmentA2();
     }
 
     @Override
@@ -297,15 +297,12 @@ public class MainFragmentA extends MyLazyFragment {
                 .isDisposed();
     }
 
-    private void imageLoopNews(List<LoopImageNewsBean> o) throws NoSuchFieldException, IllegalAccessException {
+    private void imageLoopNews(List<LoopImageNewsBean> o) {
         dataLoopImage = new ArrayList<>(o);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < o.size(); i++) {
             View view = View.inflate(getContext(), R.layout.main_a_banner, null);
-            Class<R.drawable> drawableClass = R.drawable.class;
-            Field declaredField = drawableClass.getDeclaredField("loop_" + (i + 1));
-            int drawableId = (int) declaredField.get(null);
             ImageView img = view.findViewById(R.id.banner_image);
-            Glide.with(img).load(drawableId).into(img);
+            Glide.with(img).load(o.get(i).getImg()).into(img);
             String id = o.get(i).getId();
             Log.e("imageLoopNews: ", id);
             view.setTag(o.get(i));
@@ -321,6 +318,7 @@ public class MainFragmentA extends MyLazyFragment {
                     intent.putExtra("contentId", ((LoopImageNewsBean) v.getTag()).getId());
                     intent.putExtra("titleIn", bean.getTitle());
                     intent.putExtra("img", bean.getImg());
+
                     startActivity(intent);
                 }
             });
@@ -374,9 +372,9 @@ public class MainFragmentA extends MyLazyFragment {
                 intent.putExtra("title", "通知公告");
                 intent.putExtra("flag", "NOTICE");
                 intent.putExtra("url", "file:///android_asset/news1.html");
-                intent.putExtra("contentId", MainFragmentA.this.adapter.getData().get(position).getId());
-                intent.putExtra("titleIn", MainFragmentA.this.adapter.getData().get(position).getTitle());
-                intent.putExtra("time", MainFragmentA.this.adapter.getData().get(position).getTime());
+                intent.putExtra("contentId", MainFragmentA2.this.adapter.getData().get(position).getId());
+                intent.putExtra("titleIn", MainFragmentA2.this.adapter.getData().get(position).getTitle());
+                intent.putExtra("time", MainFragmentA2.this.adapter.getData().get(position).getTime());
                 startActivity(intent);
             }
         });
