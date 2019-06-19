@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white"
+    android:gravity="left|center"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/fl_class_id_01"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10"
+        android:tag="01">
+
+        <ImageView
+            android:id="@+id/img_class_id_01"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/news_img1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_class_id_01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black_trans"
+                android:ellipsize="end"
+                android:gravity="bottom"
+                android:lines="1"
+                android:padding="7dp"
+                android:text="景俊海到长白县调研时强调:扎景俊海到长白县调研时强调"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_class_id_02"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10"
+        android:tag="02">
+
+        <ImageView
+            android:id="@+id/img_class_id_02"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/news_img2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_class_id_02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black_trans"
+                android:ellipsize="end"
+                android:gravity="bottom"
+                android:lines="1"
+                android:padding="7dp"
+                android:text="景俊海到长白县调研时强调:扎景俊海到长白县调研时强调"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</LinearLayout>

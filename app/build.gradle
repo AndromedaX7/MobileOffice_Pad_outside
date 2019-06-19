@@ -1,0 +1,202 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        applicationId "com.mobilepolice.office"
+        minSdkVersion 21
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 10
+        versionName "1.0.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk { abiFilters "armeabi" }
+    }
+
+    //APK 签名的那些事：https://www.jianshu.com/p/a1f8e5896aa2
+//    signingConfigs {
+//        release {
+//            keyAlias '密钥别称'
+//            keyPassword '密钥密码'
+//            storeFile file('E:/MySign.jks')
+//            storePassword '密钥库密码'
+//        }
+//
+//        debug {
+//            keyAlias '密钥别称'
+//            keyPassword '密钥密码'
+//            storeFile file('E:/MySign.jks')
+//            storePassword '密钥库密码'
+//        }
+//    }
+    buildTypes {
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            // 移除无用的resource文件，前提minifyEnabled必须打开
+            shrinkResources false
+            // ZipAlign优化
+            zipAlignEnabled false
+            // 设置混淆
+            minifyEnabled false
+            //加载默认混淆配置涵
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 正式环境签名
+            //signingConfig signingConfigs.release
+        }
+
+        debug {
+            //ZipAlign优化
+            zipAlignEnabled false
+            //设置混淆
+            minifyEnabled false
+            //加载默认混淆配置涵
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 开发环境签名
+            //signingConfig signingConfigs.debug
+        }
+    }
+
+//    flavorDimensions "default"//这个名字貌似随便取，也可以有多个，总之一定要有
+    //多渠道打包
+//    productFlavors {
+//        kuan {}     //酷安
+//        tencent {}  //应用宝
+//        baidu {}    //百度
+//        xiaomi {}   //小米
+//        huawei {}   //华为
+//        google {}   //谷歌
+//
+//        productFlavors.all { flavor ->
+//            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+//        }
+//    }
+
+    // JNI 目录
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+// api 与 implementation的区别：https://www.jianshu.com/p/8962d6ba936e
+dependencies {
+
+    // 依赖 libs 目录下所有 Jar 包
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // 基础库（不包任何第三方框架）
+    implementation project(':base')
+
+    // 自定义 View
+    implementation project(':widget')
+
+    // 友盟
+
+    //    implementation project(':umeng')
+
+    // 示例：添加一个 aar 包
+
+    // implementation(name: 'password_dialog', ext: 'aar')
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:support-v4:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintlayoutVersion"
+
+    // Dex分包，解决 65k 问题
+    implementation 'com.android.support:multidex:1.0.3'
+
+    // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
+
+    // 侧滑功能：https://github.com/bingoogolapple/BGASwipeBackLayout-Android
+    implementation 'cn.bingoogolapple:bga-swipebacklayout:1.1.9@aar'
+
+    // 权限请求框架：https://github.com/getActivity/XXPermissions
+    implementation 'com.hjq:xxpermissions:5.2'
+
+    // 标题栏：https://github.com/getActivity/TitleBar
+    implementation 'com.hjq:titlebar:3.5'
+
+    // 吐司工具类：https://github.com/getActivity/ToastUtils
+    implementation 'com.hjq:toast:5.0'
+
+    // 圆形的ImageView：https://github.com/hdodenhof/CircleImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    // ButterKnife注解库：https://github.com/JakeWharton/butterknife
+    implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+    implementation files('libs/iTextpdf.jar')
+    implementation 'com.alibaba:fastjson:1.1.56.android'
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    //    implementation 'com.android.support:appcompat-v7:25.1.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.41'
+    implementation 'com.youth.banner:banner:1.4.10'
+    implementation 'org.xutils:xutils:3.5.0'
+    implementation 'com.iarcuschin:simpleratingbar:0.1.5'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
+    //    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+
+    //    implementation 'com.github.Dean1990:Mp3Recorder:-SNAPSHOT'
+
+    // implementation project(':Mp3Recorderr')
+
+    //    implementation project(':android-pdf-viewer')
+    implementation project(':audiolibrary')
+    implementation project(':scrawlviewlib')
+    implementation project(':popwindowlibrary')
+    implementation project(':calendarlibrary')
+    implementation files('libs/activation.jar')
+    implementation files('libs/additionnal.jar')
+    implementation files('libs/javax.mail.jar')
+    implementation 'com.github.Othershe:CalendarView:1.2.1'
+    implementation 'org.litepal.android:core:1.5.0'
+    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1371_43624_sharewithdownload_withoutGame_obfs_20181106_121046.jar')
+//    implementation 'com.contrarywind:Android-PickerView:4.1.3'
+    implementation 'com.contrarywind:Android-PickerView:3.2.4'
+    // -------------------- 以下两个库是必须依赖的 ----------------------------
+    implementation 'com.android.support:support-v4:25.0.1'
+    implementation 'cn.bingoogolapple:bga-swipeitemlayout:1.0.4@aar'
+    implementation 'cn.bingoogolapple:bga-adapter:1.1.5@aar'
+
+    // -------------------- 以上两个库是必须依赖的 ----------------------------
+    implementation project(':doodle')
+
+    /*2019-03-03-start*/
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+    /*2019-03-03-end*/
+    implementation 'com.squareup.okhttp3:okhttp:3.13.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.2.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+    implementation 'com.squareup.retrofit2:retrofit-mock:2.2.0'
+
+    // ===========  rx ==========================
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
+    implementation project(':timeline')
+//    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
+}
+
+repositories {
+    flatDir {
+        dirs 'libs' //就是你放aar的目录地址
+    }
+}

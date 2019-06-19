@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/doodle_title_bars"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/doodle_title_bar_height"
+        android:layout_below="@id/tb_copy_title"
+        android:background="@color/main_color"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/doodle_title_bar_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <cn.forward.androids.views.MaskImageView
+                android:id="@+id/doodle_btn_back"
+                android:layout_width="@dimen/doodle_title_bar_height"
+                android:layout_height="match_parent"
+                android:onClick="onClick"
+                android:scaleType="centerInside"
+                android:src="@drawable/doodle_btn_back"
+                android:visibility="visible"
+                app:miv_is_ignore_alpha="true"
+                app:miv_mask_color="#a8a8a8" />
+
+            <FrameLayout
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#101010" />
+
+            <cn.forward.androids.views.STextView
+                android:id="@+id/doodle_txt_title"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="公文正文"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                app:stv_text_color_pressed="#aaffffff" />
+
+
+            <cn.forward.androids.views.MaskImageView
+                android:id="@+id/doodle_btn_rotate"
+                android:layout_width="@dimen/doodle_title_bar_height"
+                android:layout_height="@dimen/doodle_title_bar_height"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/doodle_rotate"
+                android:textSize="20dp"
+                android:visibility="gone"
+                app:miv_is_ignore_alpha="true"
+                app:miv_mask_color="#a8a8a8" />
+
+            <cn.forward.androids.views.MaskImageView
+                android:id="@+id/doodle_btn_hide_panel"
+                android:layout_width="@dimen/doodle_title_bar_height"
+                android:layout_height="@dimen/doodle_title_bar_height"
+                android:onClick="onClick"
+                android:padding="13dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/doodle_btn_effect_panel"
+                android:visibility="gone"
+                app:miv_is_ignore_alpha="true"
+                app:miv_mask_color="#a8a8a8" />
+
+            <cn.forward.androids.views.MaskImageView
+                android:id="@+id/doodle_btn_finish"
+                android:layout_width="@dimen/doodle_title_bar_height"
+                android:layout_height="match_parent"
+                android:onClick="onClick"
+                android:scaleType="centerCrop"
+                android:src="@drawable/doodle_btn_finish"
+                android:visibility="gone"
+                app:miv_is_ignore_alpha="true"
+                app:miv_mask_color="#a8a8a8" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.hjq.widget.NoScrollViewPagerTo
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/doodle_title_bars"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:background="@color/cut_line"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="文件区域可随意签名"
+            android:textColor="@color/main_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/blue_trans"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="上一页"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/cut_line"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/blue_trans"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="下一页"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_below="@+id/viewpager"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/class_id_01"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:background="@drawable/confirm"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_margin="8dp"
+            android:tag="01">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/confirm_img" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="同意"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/class_id_02"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:background="@drawable/reject"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_margin="8dp"
+            android:tag="02">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/reject_img" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="驳回"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

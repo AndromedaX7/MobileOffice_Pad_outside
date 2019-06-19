@@ -1,0 +1,80 @@
+html { font-size: 20px; color: #525252; }
+@media only screen and (min-width: 320px){ html { font-size: 62.5%!important; } }
+@media only screen and (min-width: 360px){ html { font-size: 72.5%!important; } }
+@media only screen and (min-width: 400px){ html { font-size: 82.5%!important; } }
+@media only screen and (min-width: 480px){ html { font-size: 94%!important; } }
+@media only screen and (min-width: 768px){ html { font-size: 102%!important; } }
+html,body { height: 100%; background: #f2f3f9; }
+.mui-content { background-color: #edf2f6; }
+.gl-content { height: 100%; overflow: auto; }
+
+/* 申请助学金 */
+
+.gl-common-btn { display: block; margin: 20px auto; width: 60%; padding: 10px 0; color: #fff; border: none; outline: none; font-size: 18px; border-radius: 5px; filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startcolorstr=#34a5ff, endcolorstr=#357dff);
+	background: #34a5ff;
+	background: -webkit-linear-gradient(90deg,#34a5ff 0%,#357dff 100%); 
+	background: -o-linear-gradient(90deg,#34a5ff 0%,#357dff 100%); 
+	background: -moz-linear-gradient(90deg,#34a5ff 0%,#357dff 100%); 
+	background: linear-gradient(90deg,#34a5ff 0%,#357dff 100%); }
+
+/* 新闻列表 */
+.gl-news-list li { padding: 12px 12px; }
+.gl-news-pic { position: relative; float: left; width: 9rem; height: 7rem; }
+.gl-news-pic img { display: block; width: 100%; height: 100%; }
+.gl-news-infor { padding-left: 10rem; font-size: 1.4rem; color: #2e2e2e; }
+.gl-news-infor p { margin-top: 5px; }
+.gl-news-time,.gl-seen-box { float: left; color: #989898; padding-left: 20px; background: url(../img/icon-calendar-news@2x.png) no-repeat left center; background-size: 15px; }
+.gl-new { position: absolute; top: -5px; right: -10px; padding: 0px 3px; color: #fff; font-size: 14px; border-radius: 5px; background: #cd0000; line-height: 1.4; }
+
+/* 新闻详情 */
+.gl-news-detail { background: #fff; }
+.gl-news-title { width: 70%; font-size: 1.6rem; color: #313131; padding: 5px 0 6px; line-height: 1.5; margin: 0 auto; text-align: center; }
+.gl-meeting,.gl-host { display: block; color: #cd0000; padding: 3px 0; }
+.gl-news-about { font-size: 1.4rem; color: #6b6b6b; text-align: center; padding: 10px 0 5px; }
+.gl-news-about span { padding: 0 10px; }
+.gl-news-con { padding: 0 20px 30px; }
+.gl-news-con img { display: block;  width: 100%; }
+.gl-news-con p { font-size: 1.4rem; color: #525252; text-indent: 2.8rem; line-height: 1.6; padding-bottom: 10px; }
+
+
+/* 人员信息 */
+.gl-company-my-box { margin: 15px auto 0; padding: 20px 15px 20px; border-radius: 5px; overflow: hidden; background: #fff; }
+.gl-company-my-box .mui-table-view-cell:after,.gl-company-my-box .mui-table-view:after { background: #fff; }
+.gl-company-icon { float: left; width: 90px; height: 90px; border-radius: 100px; overflow: hidden; }
+.gl-company { text-align: left; padding-left: 105px; height: 90px; }
+.gl-company h1 { padding-top: 30px; font-size: 1.6rem; padding-bottom: 5px; }
+.gl-company p { font-size: 1.4rem; }
+.gl-emp-tel { margin-top: 15px; background: #fff; padding: 15px; font-size: 1.5rem; }
+.gl-tel { padding-left: 15px; color: #357eff; }
+.gl-job { padding-left: 10px; }
+
+/* 通讯录 */
+.white-back { min-height: 100%; background: #fff; }
+.gl-address-list li { padding: 13px 15px; line-height: 30px; }
+.gl-title { background: #edf2f6; font-size: 1.4rem; color: #7f7f7f; padding: 10px 15px!important; }
+.gl-file-icon,.gl-emp-img { float: left; width: 30px; height: 30px; background: url(../img/icon-folder@2x.png) no-repeat center center; background-size: 100%; }
+.gl-file-time { float: right; color: #7f7f7f; font-size: 1.4rem; }
+.gl-file-label { padding-left: 40px; font-size: 1.5rem; }
+.gl-emp-count { font-size: 1.5rem; color: #7f7f7f; margin-top: 20px; text-align: center; }
+.gl-section-list li { padding: 10px 15px; }
+.gl-section-list .gl-file-label { line-height: 40px; padding-left: 50px; }
+.gl-emp-img { border-radius: 30px; background: #ececec; overflow: hidden; width: 40px; height: 40px; }
+.gl-emp-img img { display: block; width: 100%; }
+
+/* 新闻页面轮播图 */
+.swiper-wrapper img { display: block; width: 100%; }
+.gl-one-line { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gl-pic-infor { position: absolute; bottom: 0; left: 0; right: 40%; height: 30px; line-height: 30px; color: #fff; font-size:15px; text-indent: 20px; background: rgba(0,0,0,0.3); }
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction { position: absolute; bottom: 0; right: 0; width: 40%; left: auto; height: 30px; padding-top: 5px; }
+/* 通知公告 */
+.gl-infor-box li { padding: 15px; }
+.gl-canlendar { height: 100%; background: url(../img/icon-calendar@2x.png) no-repeat center center; background-size: 100% 100%; text-align: center; overflow: hidden; }
+.gl-infor-box .gl-news-pic { width: 7rem; }
+.gl-infor-box .gl-news-infor { padding-left: 8rem; }
+.gl-year-month { display: block; font-size: 15px; color: #6b6b6b; margin-top: 20px; }
+.gl-date { display: block; color: #186fe9; font-size: 24px; }
+.gl-seen-box { background: url(../img/icon-view-default@2x.png) no-repeat left center; background-size: 15px; }
+.gl-seen-box.active { background: url(../img/icon-view-selected@2x.png) no-repeat left center; background-size: 15px; }
+.gl-seen-box.active { color: #357eff; }
+.gl-seen-box .active { display: none; }
+.gl-seen-box.active .active { display: inline; }

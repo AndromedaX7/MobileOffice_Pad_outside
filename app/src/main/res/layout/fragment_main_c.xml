@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/fragment_c_bg">
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:background="@color/main_color"-->
+        <!--android:gravity="left|center"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingLeft="20dp"-->
+        <!--android:paddingTop="15dp">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_data_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:text="业务驾驶舱"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="28sp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_badge"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="3dp"-->
+            <!--android:background="@drawable/circle_white"-->
+            <!--android:gravity="center"-->
+            <!--android:text=""-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="5sp" />-->
+
+    <!--</LinearLayout>-->
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_test_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/main_color"
+        android:visibility="gone"
+        app:bar_style="transparent"
+        app:icon_back="false"
+        app:layout_collapseMode="pin"
+        app:title="数据驾驶舱" />
+
+    <TextView android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="警综案件审批情况统计" />
+
+    <ImageView android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/data1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" android:visibility="gone"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="指挥中心接警情况统计" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:visibility="gone"
+        android:layout_weight="3"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/data2" />
+
+
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:src="@drawable/echarts"/>-->
+
+    <!--<com.flyco.tablayout.SlidingTabLayout-->
+    <!--android:id="@+id/tab_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:background="@color/white"-->
+    <!--android:paddingLeft="10dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--android:visibility="gone"-->
+    <!--app:tl_indicator_color="@color/main_color"-->
+    <!--app:tl_indicator_corner_radius="1.5dp"-->
+    <!--app:tl_indicator_height="2dp"-->
+    <!--app:tl_indicator_width="120dp"-->
+    <!--app:tl_tab_space_equal="true"-->
+    <!--app:tl_textSelectColor="@color/main_color"-->
+    <!--app:tl_textUnselectColor="#333333"-->
+    <!--app:tl_textsize="16sp" />-->
+
+    <!--<android.support.v4.view.ViewPager-->
+    <!--android:id="@+id/view_pager"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:visibility="gone" />-->
+
+</LinearLayout>

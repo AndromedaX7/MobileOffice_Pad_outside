@@ -1,0 +1,1 @@
+include ':app', ':base', ':widget', ':umeng', ':Mp3Recorderr',  ':audiolibrary', ':scrawlviewlib', ':popwindowlibrary', ':calendarlibrary', ':doodle',':timeline'

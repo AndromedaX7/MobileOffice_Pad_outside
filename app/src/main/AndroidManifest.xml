@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mobilepolice.office">
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- 外部存储读写权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- 拍照权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 联网权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- 友盟统计 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+    <application
+        android:name=".app.FloatingControllerApplication"
+        android:appComponentFactory="猫栗小七鱼"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/logo"
+        android:theme="@style/AppTheme"
+        tools:replace="android:appComponentFactory">
+        <provider
+            android:name=".FavoriteInfoProvider"
+            android:authorities="com.access.favorite.info"
+            android:exported="false" />
+
+        <!-- android:theme="@style/LauncherTheme" -->
+        <!-- 启动页面（因为使用了LauncherTheme，所以不要给这个Activity设置screenOrientation属性，会导致崩溃） -->
+        <!-- LauncherActivity -->
+        <activity
+            android:name=".ui.activity.LauncherActivity"
+            android:screenOrientation="portrait">
+
+            <!-- 程序入口 -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.HandwrittenSignatureActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <!-- 主页界面 -->
+        <activity
+            android:name=".ui.activity.HomeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 登录界面 -->
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 登录界面 -->
+        <activity
+            android:name=".ui.activity.LoginNewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <!-- 注册界面 -->
+        <activity
+            android:name=".ui.activity.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden" />
+
+        <!-- 关于界面 -->
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:label="@string/about_text"
+            android:launchMode="singleTop" />
+
+        <!-- 浏览器界面 -->
+        <activity
+            android:name=".ui.activity.WebActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.DocumentApplyActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.DocumentMainActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.DocumentExamineActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.DocumentPendingWorkActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.DocumentPendingWorkDetailedActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.DocumentSignatureActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.NotificationNoticeActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.NewsListActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.NewsDetailedActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.ScrawlImageviewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ScheduleMainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MailBoxContactsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MailBoxMainActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.MailBoxSendMainActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.MailBoxSendDetailActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.MailBoxDraftsMainActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.MailBoxDraftsDetailActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.MailBoxCollectMainActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".ui.activity.MailBoxCollectDetailActivity"
+            android:configChanges="orientation|keyboardHidden" />
+
+        <!-- 邮箱 -->
+        <activity
+            android:name=".ui.activity.EmailLoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MailBoxSendEditActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MailSettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name=".email.provider.EmailConstantProvider"
+            android:authorities="${applicationId}.emailconstantprovider" />
+        <provider
+            android:name=".email.provider.CaogaoxiangProvider"
+            android:authorities="${applicationId}.caogaoxiangprovider" />
+        <provider
+            android:name=".email.provider.AttachmentProvider"
+            android:authorities="${applicationId}.attachmentprovider" />
+        <provider
+            android:name=".email.provider.EmailStatusProvider"
+            android:authorities="${applicationId}.emailstatusprovider" />
+        <provider
+            android:name=".update.ApkUpdateFileProvider"
+            android:authorities="${applicationId}.updateFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/android_update_file_provider" />
+        </provider>
+        <!-- <provider -->
+        <!-- android:name="android.support.v4.content.FileProvider" -->
+        <!-- android:authorities="com.mobilepolice.office.fileprovider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/file_paths" /> -->
+        <!-- </provider> -->
+        <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="com.mobilepolice.office.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_path" />
+    </provider>
+        <provider
+            android:name=".webservice.DatabaseProvider"
+            android:authorities="com.mobilepolice.office.provider"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".ui.activity.NewsContent" />
+        <activity android:name=".ui.activity.ApproveDetailsActivity" />
+        <activity android:name=".ui.activity.MyFavoriteActivity" />
+        <activity android:name=".ui.activity.EmailDetail" />
+        <activity android:name=".ui.activity.DraftsEmailDetail"></activity>
+    </application>
+
+</manifest>

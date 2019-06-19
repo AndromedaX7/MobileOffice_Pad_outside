@@ -1,0 +1,111 @@
+@charset "utf-8";
+/* CSS reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td,figure,figcaption { 
+	margin:0;
+	padding:0;
+}
+html,body {
+	margin:0;
+	padding:0;
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset,img { 
+	border:0;
+}
+address,caption,cite,code,dfn,th,var {
+	font-style:normal;
+	font-weight:normal;
+}
+ol,ul,li {
+	list-style:none;
+}
+caption,th {
+	text-align:left;
+}
+h1,h2,h3,h4,h5,h6 ,b{
+	font-size:100%;
+	font-weight:normal;
+}
+q:before,q:after {
+	content:'';
+}
+abbr,acronym { border:0;
+}
+input{outline:none;}
+* { box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
+/*字体颜色*/
+.me-white{color:#fff!important;}
+.me-aaa{color:#aaa!important;}
+.me-6a{color:#6a6a6a;}
+.me-red{color:#FF0000!important;}
+.current{color:#06c1ae;} /*绿色*/
+.me-blue { color: #3891e5;}
+.me-333{ color: #333!important;}
+
+/*文字大小*/
+.font1 { font-size: 0.4rem!important;}
+/*文字排列*/
+.me-center{text-align:center!important;}
+.me-left{text-align:left!important;}
+/*边距*/
+.me-top{margin-top:10px!important;}
+.me-nop{padding:0!important;}
+.me-no-margin{margin:0!important;}
+.me-list-marginb{ margin-bottom:8px;}
+/*元素类型*/
+.me-block{display: block;}
+.me-inline-block{display: inline-block;}
+
+/*定位*/
+.me-position{position:relative;}
+
+/*浮动*/
+.me-left{ float: left; }
+.me-right{ float: right; }
+.me-overflow { overflow: hidden;}
+
+/*header*/
+.me-nav-left,.me-nav-right{font-size:1.2rem;position:absolute;top:0;height:100%;width:40px;text-align:center;line-height:44px;color:#fff;}
+.me-nav-left{left:0;font-size:1.5rem;}
+.me-nav-right{right:0;width:60px;}
+
+/*背景颜色*/
+.blue-back { background: #3891e5!important;}
+.white-back { background: #fff!important;}
+.trans-back { background: transparent!important;}
+.f06{ background: #f06c64;} /*偏红*/
+.header-back { filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startcolorstr=#4161eb, endcolorstr=#0277e7);
+	background: #4161eb;
+	background: -webkit-linear-gradient(90deg,#4161eb 0%,#0277e7 100%); 
+	background: -o-linear-gradient(90deg,#4161eb 0%,#0277e7 100%); 
+	background: -moz-linear-gradient(90deg,#4161eb 0%,#0277e7 100%); 
+	background: linear-gradient(90deg,#4161eb 0%,#0277e7 100%);  }
+
+/*单选按钮图片*/
+
+.me-before-radios::before { background: url(../img/no.jpg) no-repeat 0 0 ;background-size:cover; display: block; content:''; width: 20px; height: 15px; position: absolute; right: 25px; top: 50%; margin-top: -8px; }
+.me-before-radios.active::before { background: url(../img/yes.jpg) no-repeat 0 0 ;background-size:cover; display: block; content:''; width: 20px; height: 15px; position: absolute; right: 25px; top: 50%; margin-top: -8px; }
+
+/*去除边框*/
+.me-no-border { border: none;}
+
+/*定位使元素消失*/
+.me-disappear { position: absolute; top:-99999px; }
+
+/*清除浮动*/
+.me-clear { clear: both;}
+/*2017-09-26*/
+.en-item { height: auto!important;  border:none; outline:none; display: block; position: static; width: 100%; margin-top: 0px; line-height: 19px;padding: 0 15px 0 40px!important;}
+
+.gl-two-lines { line-height: 1.7rem; width:100%; word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+    -webkit-line-clamp: 2; /** 显示的行数 **/
+    overflow: hidden;  /** 隐藏超出的内容 **/
+   	height: 3.4rem;
+   }
+ 
