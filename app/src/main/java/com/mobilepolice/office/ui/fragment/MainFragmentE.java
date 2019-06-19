@@ -211,6 +211,10 @@ public class MainFragmentE extends MyLazyFragment
 
     @BindView(R.id.sContacts)
     FrameLayout sContacts;
+    @BindView(R.id.tv_huiyi)
+    TextView tv_huiyi;
+    @BindView(R.id.sHuiyi)
+    FrameLayout sHuiyi;
 
     private int[] cDate = CalendarUtil.getCurrentDate();
     private String SingleChoose = "";
@@ -238,8 +242,8 @@ public class MainFragmentE extends MyLazyFragment
     LinearLayout mask;
 
     @OnClick({R.id.tv_contacts})
-    void contactSwitcher(){
-       sContacts.setVisibility(View.VISIBLE);
+    void contactSwitcher() {
+        sContacts.setVisibility(View.VISIBLE);
         ll_rc_create.setVisibility(View.GONE);
         ll_mailbox_main.setVisibility(View.GONE);
         ll_mailbox_send.setVisibility(View.GONE);
@@ -247,8 +251,20 @@ public class MainFragmentE extends MyLazyFragment
         ll_mailbox_sendlist.setVisibility(View.GONE);
         ll_mailbox_drafts.setVisibility(View.GONE);
         ll_rc_main.setVisibility(View.GONE);
+        sHuiyi.setVisibility(View.GONE);
     }
-
+    @OnClick({R.id.tv_huiyi})
+    void huiYiSwitcher() {
+        sContacts.setVisibility(View.GONE);
+        ll_rc_create.setVisibility(View.GONE);
+        ll_mailbox_main.setVisibility(View.GONE);
+        ll_mailbox_send.setVisibility(View.GONE);
+        ll_mailbox_recevice_main.setVisibility(View.GONE);
+        ll_mailbox_sendlist.setVisibility(View.GONE);
+        ll_mailbox_drafts.setVisibility(View.GONE);
+        ll_rc_main.setVisibility(View.GONE);
+        sHuiyi.setVisibility(View.VISIBLE);
+    }
     public static MainFragmentE newInstance() {
         return new MainFragmentE();
     }
@@ -723,9 +739,11 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.VISIBLE);
             ll_rc_create.setVisibility(View.GONE);
             sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             initCalendarView();
         } else if (v == tv_mail) {
             sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             Drawable drawable = getResources().getDrawable(
                     R.mipmap.rili_default);
             // / 这一步必须要做,否则不会显示.
@@ -758,6 +776,7 @@ public class MainFragmentE extends MyLazyFragment
                 }
             }).start();
         } else if (v == ll_mailbox_main) {
+            sHuiyi.setVisibility(View.GONE);
             sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.VISIBLE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
@@ -768,6 +787,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_mailbox_recevice_main) {
             sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.VISIBLE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -777,6 +797,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_mailbox_send) {
             sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.VISIBLE);
@@ -786,6 +807,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_rc_main) {
             sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -795,6 +817,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_rc_create) {
             sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -804,6 +827,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_create.setVisibility(View.VISIBLE);
         } else if (v == tv_mailbox_main_add) {
             sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             //发送邮件
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
@@ -814,6 +838,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_collect) {
             sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             //收件箱列表
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.VISIBLE);
@@ -833,7 +858,9 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
             initSendRecyclerView();
-        } else if (v == ll_drafts) {sContacts.setVisibility(View.GONE);
+        } else if (v == ll_drafts) {
+            sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             //草稿箱
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
@@ -843,7 +870,9 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
             initdraftsRecyclerView();
-        } else if (v == tv_mailbox_create_title) {sContacts.setVisibility(View.GONE);
+        } else if (v == tv_mailbox_create_title) {
+            sContacts.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             title = et_mailbox_title.getText().toString();
             content = et_mailbox_content.getText().toString();
             receiveMail = et_mailbox_consignee.getText().toString();
@@ -851,7 +880,9 @@ public class MainFragmentE extends MyLazyFragment
                 Log.e("返回: ", "9");
                 mask.setVisibility(View.VISIBLE);
 //                saveFailedEmail();
-            } else {sContacts.setVisibility(View.GONE);
+            } else {
+                sContacts.setVisibility(View.GONE);
+                sHuiyi.setVisibility(View.GONE);
                 clearMailboxSend();
                 ll_mailbox_main.setVisibility(View.VISIBLE);
                 ll_mailbox_recevice_main.setVisibility(View.GONE);
@@ -866,7 +897,7 @@ public class MainFragmentE extends MyLazyFragment
 
         } else if (v == tv_mailbox_send) {
 //            toast("发送成功！");
-
+            sHuiyi.setVisibility(View.GONE);
             sContacts.setVisibility(View.GONE);
             title = et_mailbox_title.getText().toString();
             content = et_mailbox_content.getText().toString();
@@ -903,48 +934,60 @@ public class MainFragmentE extends MyLazyFragment
 
             Intent intent = new Intent(getActivity(), MailBoxContactsActivity.class);
             startActivity(intent);
-        } else if (v == tv_mailbox_receive_add) {sContacts.setVisibility(View.GONE);
+        } else if (v == tv_mailbox_receive_add) {
+            sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
+            ll_mailbox_recevice_main.setVisibility(View.GONE);
+            ll_mailbox_send.setVisibility(View.VISIBLE);
+            ll_mailbox_sendlist.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
+            ll_mailbox_drafts.setVisibility(View.GONE);
+            ll_rc_main.setVisibility(View.GONE);
+            ll_rc_create.setVisibility(View.GONE);
+        } else if (v == tv_mailbox_receive_title) {
+            sContacts.setVisibility(View.GONE);
+            ll_mailbox_main.setVisibility(View.VISIBLE);
+            ll_mailbox_recevice_main.setVisibility(View.GONE);
+            ll_mailbox_send.setVisibility(View.GONE);
+            ll_mailbox_sendlist.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
+            ll_mailbox_drafts.setVisibility(View.GONE);
+            ll_rc_main.setVisibility(View.GONE);
+            ll_rc_create.setVisibility(View.GONE);
+        } else if (v == tv_mailbox_sendlist_add) {
+            sContacts.setVisibility(View.GONE);
+            ll_mailbox_main.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.VISIBLE);
             ll_mailbox_sendlist.setVisibility(View.GONE);
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_receive_title) {sContacts.setVisibility(View.GONE);
+        } else if (v == tv_mailbox_sendlist_title) {
+            sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.VISIBLE);
+            sHuiyi.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
             ll_mailbox_sendlist.setVisibility(View.GONE);
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_sendlist_add) {sContacts.setVisibility(View.GONE);
+        } else if (v == tv_mailbox_drafts_add) {
+            sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
+            sHuiyi.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.VISIBLE);
             ll_mailbox_sendlist.setVisibility(View.GONE);
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_sendlist_title) {sContacts.setVisibility(View.GONE);
+        } else if (v == tv_mailbox_drafts_title) {
+            sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.VISIBLE);
-            ll_mailbox_recevice_main.setVisibility(View.GONE);
-            ll_mailbox_send.setVisibility(View.GONE);
-            ll_mailbox_sendlist.setVisibility(View.GONE);
-            ll_mailbox_drafts.setVisibility(View.GONE);
-            ll_rc_main.setVisibility(View.GONE);
-            ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_drafts_add) {sContacts.setVisibility(View.GONE);
-            ll_mailbox_main.setVisibility(View.GONE);
-            ll_mailbox_recevice_main.setVisibility(View.GONE);
-            ll_mailbox_send.setVisibility(View.VISIBLE);
-            ll_mailbox_sendlist.setVisibility(View.GONE);
-            ll_mailbox_drafts.setVisibility(View.GONE);
-            ll_rc_main.setVisibility(View.GONE);
-            ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_drafts_title) {sContacts.setVisibility(View.GONE);
-            ll_mailbox_main.setVisibility(View.VISIBLE);
+            sHuiyi.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
             ll_mailbox_sendlist.setVisibility(View.GONE);

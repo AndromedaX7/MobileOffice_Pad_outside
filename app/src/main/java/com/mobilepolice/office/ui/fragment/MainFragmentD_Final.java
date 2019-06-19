@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 import com.mobilepolice.office.R;
 import com.mobilepolice.office.base.MyLazyFragment;
 import com.mobilepolice.office.bean.ContactsData;
+import com.mobilepolice.office.bean.EmailBean;
+import com.mobilepolice.office.ui.adapter.EmailAdapter;
 import com.mobilepolice.office.widget.StackLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +62,8 @@ public class MainFragmentD_Final extends MyLazyFragment
         return R.id.tb_test_bar;
     }
 
+    ArrayList<EmailBean> data = new ArrayList<>();
+
     @Override
     protected void initView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.email_root_p0, viewStack, false);
@@ -67,6 +73,13 @@ public class MainFragmentD_Final extends MyLazyFragment
         p1 = new Page_1_ViewHolder(p1_View);
         p0 = new Page_0_ViewHolder(view);
         viewStack.push(view);
+        data.add(new EmailBean("刘爽", "吉林省厅新一代项目--软件验收需要整理的资料及时间【重要】", "2019/04/06"));
+        data.add(new EmailBean("甜心玥", "常住人员基本信息，机动车基本信息", "2019/04/03"));
+        data.add(new EmailBean("雨田", "常住人员基本信息，机动车基本信息", "2019/04/01"));
+        data.add(new EmailBean("vesslan", "项目申报书第三版", "2019/04/04"));
+        data.add(new EmailBean("20222773", "上架应用流程", "2019/03/28"));
+        data.add(new EmailBean("雨田", "吉林公安企业微信工作安排", "2019/03/26"));
+
 //        HttpTools.build(HttpConnectInterface.class)
 //                .findDepartmentAll()
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -125,6 +138,8 @@ public class MainFragmentD_Final extends MyLazyFragment
 
 
     class Page_0_ViewHolder {
+
+
         @BindView(R.id.title)
         TextView title;
         @BindView(R.id.tv_mailbox_main_add)
@@ -149,24 +164,26 @@ public class MainFragmentD_Final extends MyLazyFragment
         @OnClick(R.id.ll_collect)
         void onCollectPressed() {
             viewStack.push(p1_View);
-            p1.set("收件箱");
+
+
+            p1.set("收件箱", data.subList(0, 3));
         }
 
         @OnClick(R.id.tv_mailbox_main_add)
-        void addNew(){
+        void addNew() {
             viewStack.push(p2_ViewSender);
         }
 
         @OnClick(R.id.ll_send)
         void onSendPressed() {
             viewStack.push(p1_View);
-            p1.set("发件箱");
+            p1.set("发件箱", data.subList(3, data.size()));
         }
 
         @OnClick(R.id.ll_drafts)
         void ll_drafts() {
             viewStack.push(p1_View);
-            p1.set("草稿箱");
+            p1.set("草稿箱", new ArrayList<>());
         }
     }
 
@@ -178,9 +195,16 @@ public class MainFragmentD_Final extends MyLazyFragment
         RecyclerView rvReceviceMRecyclerView;
         @BindView(R.id.ll_mailbox_recevice_main)
         LinearLayout llMailboxReceviceMain;
+        @BindView(R.id.indicator)
+        TextView indicator;
+
+        EmailAdapter adapter;
 
         Page_1_ViewHolder(View view) {
+            adapter = new EmailAdapter();
             ButterKnife.bind(this, view);
+            rvReceviceMRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            rvReceviceMRecyclerView.setAdapter(adapter);
         }
 
         @OnClick(R.id.title)
@@ -188,8 +212,17 @@ public class MainFragmentD_Final extends MyLazyFragment
             viewStack.pop();
         }
 
-        void set(String title) {
+        void set(String title, List<EmailBean> bean) {
             this.title.setText(title);
+            adapter.setNewData(bean);
+            if (adapter.getItemCount() > 0) {
+                rvReceviceMRecyclerView.setVisibility(View.VISIBLE);
+                indicator.setVisibility(View.GONE);
+            } else {
+                rvReceviceMRecyclerView.setVisibility(View.GONE);
+                indicator.setVisibility(View.VISIBLE);
+
+            }
         }
     }
 
@@ -220,7 +253,7 @@ public class MainFragmentD_Final extends MyLazyFragment
         }
 
         @OnClick(R.id.tv_mailbox_create_title)
-        void onBack(){
+        void onBack() {
             viewStack.pop();
         }
     }

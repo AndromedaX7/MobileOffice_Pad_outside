@@ -354,6 +354,7 @@ public class MainFragmentA2 extends MyLazyFragment {
                 Intent intent = new Intent(getActivity(), NewsDetailedActivity.class);
                 intent.putExtra("title", "新闻中心");
                 intent.putExtra("flag", "NEWS");
+                intent.putExtra("idx",position);
                 intent.putExtra("contentId", mAdapter.getData().get(position).getId());
                 intent.putExtra("titleIn", mAdapter.getData().get(position).getTitle());
                 intent.putExtra("img", mAdapter.getData().get(position).getImg());

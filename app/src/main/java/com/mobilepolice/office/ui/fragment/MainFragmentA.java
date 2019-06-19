@@ -309,21 +309,21 @@ public class MainFragmentA extends MyLazyFragment {
             String id = o.get(i).getId();
             Log.e("imageLoopNews: ", id);
             view.setTag(o.get(i));
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LoopImageNewsBean bean = (LoopImageNewsBean) v.getTag();
-
-
-                    Intent intent = new Intent(getActivity(), NewsDetailedActivity.class);
-                    intent.putExtra("title", "新闻中心");
-                    intent.putExtra("flag", "NEWS");
-                    intent.putExtra("contentId", ((LoopImageNewsBean) v.getTag()).getId());
-                    intent.putExtra("titleIn", bean.getTitle());
-                    intent.putExtra("img", bean.getImg());
-                    startActivity(intent);
-                }
-            });
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    LoopImageNewsBean bean = (LoopImageNewsBean) v.getTag();
+//
+//
+//                    Intent intent = new Intent(getActivity(), NewsDetailedActivity.class);
+//                    intent.putExtra("title", "新闻中心");
+//                    intent.putExtra("flag", "NEWS");
+//                    intent.putExtra("contentId", ((LoopImageNewsBean) v.getTag()).getId());
+//                    intent.putExtra("titleIn", bean.getTitle());
+//                    intent.putExtra("img", bean.getImg());
+//                    startActivity(intent);
+//                }
+//            });
             views.add(view);
         }
         viewPager.setAdapter(new ViewsAdapter(views));

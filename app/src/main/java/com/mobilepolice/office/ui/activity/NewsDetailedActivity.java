@@ -14,11 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hjq.bar.TitleBar;
-import com.hjq.toast.ToastUtils;
 import com.mobilepolice.office.R;
 import com.mobilepolice.office.base.MyActivity;
-import com.mobilepolice.office.bean.LoopImageNewsBean;
 import com.mobilepolice.office.bean.NewsDetailBean;
 import com.mobilepolice.office.http.HttpConnectInterface;
 import com.mobilepolice.office.http.HttpTools;
@@ -51,8 +48,8 @@ public class NewsDetailedActivity extends MyActivity {
     ImageView forward;
     private String titleIn;
     private String img = "";
-    private String time=DateUtil.format("yyyy-MM-dd", System.currentTimeMillis());
-
+    private String time = DateUtil.format("yyyy-MM-dd", System.currentTimeMillis());
+    private int idx = 0;
 
     @Override
     protected int getLayoutId() {
@@ -182,6 +179,7 @@ public class NewsDetailedActivity extends MyActivity {
 //                .subscribe(this::cacheHtml, this::err, this::onComplete)
 //                .isDisposed();
 
+        Log.e("test",marginData(o.getCon()));
         webView.loadDataWithBaseURL(null, marginData(o.getCon()), "text/html", "utf-8", null);
     }
 
@@ -218,9 +216,9 @@ public class NewsDetailedActivity extends MyActivity {
         String c = ("<!DOCTYPE2 html><html><head><meta charset=\"utf-8\">" +
                 "<meta content=\"width=device-width, initial-scale=1.0," +
                 "maximum-scale=1.0, user-scalable=0;\" name=\"viewport\" />" +
-                "</head><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<body>" + content + "</body></html>")
-//                .replaceAll("10.106.18.75:8081", "192.168.20.228:7124")
-                .replaceAll("/u/cms/www", "http://192.168.20.228:7124/u/cms/www");
+                "</head><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<body>" + content.substring(1,content.length()-2) + "</body></html>")
+                .replaceAll("/1/1/", "http://ccsyc.cn:8789/1/1/");
+//                .replaceAll("/u/cms/www", "http://ccsyc.cn:8789/1/1/news_"+idx+".jpg")
         Log.e("marginData: ", c);
         return c;
 

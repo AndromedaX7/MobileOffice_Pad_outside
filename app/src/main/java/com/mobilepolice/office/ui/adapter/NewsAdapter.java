@@ -51,7 +51,7 @@ public class NewsAdapter extends BaseQuickAdapter<NewsListBean, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, NewsListBean item) {
-
+        Log.e(TAG, "convert: "+"====id:"+item.getId() );
 
         ImageView imageView = helper.getView(R.id.imageView);
         ImageOptions imageOptions = new ImageOptions.Builder()
