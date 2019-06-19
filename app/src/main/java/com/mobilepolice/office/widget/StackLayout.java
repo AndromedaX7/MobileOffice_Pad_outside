@@ -2,12 +2,14 @@ package com.mobilepolice.office.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.util.Stack;
+
 public class StackLayout extends FrameLayout {
+
+    Stack<View> viewStack;
 
     private View top;
 
@@ -25,21 +27,21 @@ public class StackLayout extends FrameLayout {
 
     public StackLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        viewStack = new Stack<>();
     }
 
     public void pop() {
         if (getChildCount() > 0) {
             removeViewAt(getChildCount() - 1);
+            addView(viewStack.pop());
             top = getChildAt(getChildCount() - 1);
         }
     }
 
     public void push(View view) {
-        int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            if(getChildAt(i)==view){
-                return;
-            }
+        if (getChildCount() > 0) {
+            viewStack.push(getChildAt(0));
+            removeViewAt(0);
         }
         addView(view);
         top = view;

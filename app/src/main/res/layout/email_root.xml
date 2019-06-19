@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.MainFragmentD">
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_test_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/main_color"
+        android:visibility="gone"
+        app:bar_style="transparent"
+        app:icon_back="false"
+        app:icon_left="@mipmap/back"
+        app:layout_collapseMode="pin"
+        app:title="我的" />
+
+    <com.mobilepolice.office.widget.StackLayout android:id="@+id/viewStack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

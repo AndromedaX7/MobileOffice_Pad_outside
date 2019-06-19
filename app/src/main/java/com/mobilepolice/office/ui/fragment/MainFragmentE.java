@@ -16,11 +16,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -45,11 +44,10 @@ import com.mobilepolice.office.http.HttpConnectInterface;
 import com.mobilepolice.office.http.HttpTools;
 import com.mobilepolice.office.http.ResponseMe;
 import com.mobilepolice.office.ui.activity.DraftsEmailDetail;
+import com.mobilepolice.office.ui.activity.EmailDetail;
 import com.mobilepolice.office.ui.activity.MailBoxContactsActivity;
 import com.mobilepolice.office.ui.adapter.CollectRecyclerViewAdapter;
 import com.mobilepolice.office.ui.adapter.DraftsEmailListAdapter;
-import com.mobilepolice.office.ui.adapter.DraftsRecyclerViewAdapter;
-import com.mobilepolice.office.ui.activity.EmailDetail;
 import com.mobilepolice.office.ui.adapter.SendRecyclerViewAdapter;
 import com.mobilepolice.office.utils.DateUtil;
 import com.mobilepolice.office.widget.RecycleViewDivider;
@@ -60,7 +58,6 @@ import com.othershe.calendarview.utils.CalendarUtil;
 import com.othershe.calendarview.weiget.CalendarView;
 import com.othershe.calendarview.weiget.WeekView;
 
-import org.androidannotations.annotations.App;
 import org.litepal.tablemanager.Connector;
 
 import java.io.IOException;
@@ -73,6 +70,7 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -129,7 +127,7 @@ public class MainFragmentE extends MyLazyFragment
     @BindView(R.id.tv_mailbox_create_title)
     TextView tv_mailbox_create_title;
     @BindView(R.id.tv_mailbox_send)  /*发送邮件*/
-    TextView tv_mailbox_send;
+            TextView tv_mailbox_send;
     @BindView(R.id.img_contacts)
     ImageView img_contacts;
 
@@ -184,8 +182,8 @@ public class MainFragmentE extends MyLazyFragment
     RecyclerView rv_rc_mRecyclerView;
     @BindView(R.id.tv_rc_title)
     TextView tv_rc_title;
-//    @BindView(R.id.tv_rc_add)
-//    TextView tv_rc_add;
+    @BindView(R.id.tv_contacts)
+    TextView tv_contacts;
 
 
     @BindView(R.id.ll_rc_create)
@@ -209,6 +207,10 @@ public class MainFragmentE extends MyLazyFragment
 
     @BindView(R.id.add_schedule_btn)
     TextView add_schedule_btn;
+
+
+    @BindView(R.id.sContacts)
+    FrameLayout sContacts;
 
     private int[] cDate = CalendarUtil.getCurrentDate();
     private String SingleChoose = "";
@@ -235,6 +237,18 @@ public class MainFragmentE extends MyLazyFragment
 
     LinearLayout mask;
 
+    @OnClick({R.id.tv_contacts})
+    void contactSwitcher(){
+       sContacts.setVisibility(View.VISIBLE);
+        ll_rc_create.setVisibility(View.GONE);
+        ll_mailbox_main.setVisibility(View.GONE);
+        ll_mailbox_send.setVisibility(View.GONE);
+        ll_mailbox_recevice_main.setVisibility(View.GONE);
+        ll_mailbox_sendlist.setVisibility(View.GONE);
+        ll_mailbox_drafts.setVisibility(View.GONE);
+        ll_rc_main.setVisibility(View.GONE);
+    }
+
     public static MainFragmentE newInstance() {
         return new MainFragmentE();
     }
@@ -255,7 +269,7 @@ public class MainFragmentE extends MyLazyFragment
         et_mailbox_consignee.setText(MyApplication.getInstance().MailBoxContacts);
     }
 
-    private  String sendMail(String title,String content, String receiveMail, String sendMailName,String sendMail, String sendMailPsd){
+    private String sendMail(String title, String content, String receiveMail, String sendMailName, String sendMail, String sendMailPsd) {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("text/xml");
@@ -265,7 +279,7 @@ public class MainFragmentE extends MyLazyFragment
                         "   <soapenv:Header/>" +
                         "   <soapenv:Body>" +
                         "      <ser:sendMail>" +
-                        "         <arg0>{\"title\":\""+title+"\",\"content\":\""+content+"\",\"receiveMail\":\""+receiveMail+"\",\"sendMailName\":\""+sendMailName+"\",\"sendMail\":\""+sendMail+"\",\"sendMailPsd\":\""+sendMailPsd+"\"}</arg0>" +
+                        "         <arg0>{\"title\":\"" + title + "\",\"content\":\"" + content + "\",\"receiveMail\":\"" + receiveMail + "\",\"sendMailName\":\"" + sendMailName + "\",\"sendMail\":\"" + sendMail + "\",\"sendMailPsd\":\"" + sendMailPsd + "\"}</arg0>" +
                         "      </ser:sendMail>" +
                         "   </soapenv:Body>" +
                         "</soapenv:Envelope>");
@@ -276,7 +290,7 @@ public class MainFragmentE extends MyLazyFragment
                 .addHeader("Cache-Control", "no-cache")
 //                .addHeader("Postman-Token", "207ed22f-b5d4-4ca3-b025-fe1873f62a54")
                 .build();
-        Log.e(TAG, "sendMail: "+ "{\"title\":\""+title+"\",\"content\":\""+content+"\",\"receiveMail\":\""+receiveMail+"\",\"sendMailName\":\""+sendMailName+"\",\"sendMail\":\""+sendMail+"\",\"sendMailPsd\":\""+sendMailPsd+"\"}");
+        Log.e(TAG, "sendMail: " + "{\"title\":\"" + title + "\",\"content\":\"" + content + "\",\"receiveMail\":\"" + receiveMail + "\",\"sendMailName\":\"" + sendMailName + "\",\"sendMail\":\"" + sendMail + "\",\"sendMailPsd\":\"" + sendMailPsd + "\"}");
         try {
             Response response = client.newCall(request).execute();
             return response.body().string();
@@ -390,13 +404,18 @@ public class MainFragmentE extends MyLazyFragment
                 ll_rc_create.setVisibility(View.VISIBLE);
             }
         });
+
+
+        ContactsView contactsView = new ContactsView(getContext());
+        sContacts.addView(contactsView.getView());
     }
 
     private TimeLineController controller;
+
     //TODO 日程接口
     private void findTimeTaskToday(String time) {
 //        String today = DateUtil.format("yyyy-MM-dd", time);
-        Log.e("查看日程: ", time );
+        Log.e("查看日程: ", time);
         String today = time;
         HttpConnectInterface connectInterface = HttpTools.build(HttpConnectInterface.class);
         QueryTaskInfo taskInfo = new QueryTaskInfo();
@@ -473,18 +492,19 @@ public class MainFragmentE extends MyLazyFragment
             ex.getLocalizedMessage();
         }
     }
+
     public static final int DETAIL_CODE = 1;
     final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1) {
-                String response = (String)msg.obj;
+                String response = (String) msg.obj;
                 response = response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1);
                 Gson gson = new Gson();
-                Log.e("send: ",""+response );
+                Log.e("send: ", "" + response);
                 sendMailBean success = gson.fromJson(response, sendMailBean.class);
-                if(success.isSuccess()){
+                if (success.isSuccess()) {
 //                    Log.e(TAG, "handleMessage: 测试草稿箱1" );
                     clearMailboxSend();
                     toast("发送成功！");
@@ -495,18 +515,18 @@ public class MainFragmentE extends MyLazyFragment
                     ll_mailbox_drafts.setVisibility(View.GONE);
                     ll_rc_main.setVisibility(View.GONE);
                     ll_rc_create.setVisibility(View.GONE);
-                }else{
+                } else {
 //                    Log.e(TAG, "handleMessage: 测试草稿箱2" );
 //                    saveFailedEmail();
                     toast("邮件发送失败，请检查收件人信息！");
                 }
-            }else if(msg.what == 2){
-                String response = (String)msg.obj;
+            } else if (msg.what == 2) {
+                String response = (String) msg.obj;
                 response = response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1);
                 Gson gson = new Gson();
                 CollectEmailBean success = gson.fromJson(response, CollectEmailBean.class);
                 List<CollectEmailBean.ObjBean> obj = success.getObj();
-                Log.e("handleMessage: ",""+response );
+                Log.e("handleMessage: ", "" + response);
                 mAdapter.setNewData(obj);
                 rv_recevice_mRecyclerView.setAdapter(mAdapter);
                 mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -516,24 +536,24 @@ public class MainFragmentE extends MyLazyFragment
                         Intent intent = new Intent(getContext(), EmailDetail.class);
                         intent.putExtra("detail", email);
 //                        intent.putExtra("reciver","崔南南");
-                        startActivityForResult(intent,DETAIL_CODE);
+                        startActivityForResult(intent, DETAIL_CODE);
                     }
                 });
             } else if (msg.what == 3) {
-                String response = (String)msg.obj;
+                String response = (String) msg.obj;
                 response = response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1);
                 Gson gson = new Gson();
                 UpdataEmail success = gson.fromJson(response, UpdataEmail.class);
             } else if (msg.what == 4) {
-                String response = (String)msg.obj;
+                String response = (String) msg.obj;
                 Log.e("handleMessage: ", response);
                 response = response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1);
                 Gson gson = new Gson();
                 CollectEmailBean success = gson.fromJson(response, CollectEmailBean.class);
                 List<CollectEmailBean.ObjBean> obj = success.getObj();
-                tv_count.setText(""+obj.size());
+                tv_count.setText("" + obj.size());
             } else if (msg.what == 5) {
-                String response = (String)msg.obj;
+                String response = (String) msg.obj;
                 Log.e("草稿箱: ", response);
                 response = response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1);
                 Gson gson = new Gson();
@@ -549,20 +569,20 @@ public class MainFragmentE extends MyLazyFragment
                     ll_mailbox_drafts.setVisibility(View.GONE);
                     ll_rc_main.setVisibility(View.GONE);
                     ll_rc_create.setVisibility(View.GONE);
-                }else{
+                } else {
                     toast("邮件发送失败，请重试！");
                 }
             } else if (msg.what == 6) {
-                String response = (String)msg.obj;
-                Log.e("草稿箱: ",""+response );
+                String response = (String) msg.obj;
+                Log.e("草稿箱: ", "" + response);
                 Gson gson = new Gson();
                 DraftsEmailList success = gson.fromJson(response, DraftsEmailList.class);
 
-                if(!success.isSuccess()){
+                if (!success.isSuccess()) {
                     toast(success.getMsg());
                     List<DraftsEmailList.ObjBean> objNull = new ArrayList<>();
                     mDraftsAdapter.setData(objNull);
-                }else{
+                } else {
                     List<DraftsEmailList.ObjBean> obj = success.getObj();
                     mDraftsAdapter.setData(obj);
 
@@ -570,15 +590,15 @@ public class MainFragmentE extends MyLazyFragment
                 rv_drafts_mRecyclerView.setAdapter(mDraftsAdapter);
 
             } else if (msg.what == 7) {
-                String response = (String)msg.obj;
+                String response = (String) msg.obj;
                 Gson gson = new Gson();
-                Log.e("send: ",""+response );
+                Log.e("send: ", "" + response);
                 sendMailBean success = gson.fromJson(response, sendMailBean.class);
-                if(success.isSuccess()){
+                if (success.isSuccess()) {
                     mDraftsAdapter.removeItem(deletedEmailIndex);
 
                     toast("删除成功！");
-                }else{
+                } else {
                     toast("删除失败，请检查网络！");
                 }
 
@@ -589,28 +609,28 @@ public class MainFragmentE extends MyLazyFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode){
+        switch (requestCode) {
             case DETAIL_CODE:
-                if(resultCode == RESULT_OK ){
-                    boolean isSeen = data.getBooleanExtra("isSeen",false);
-                    Log.e("isSeen: ", ""+isSeen);
-                    if(!isSeen){  //邮件为未读邮件，更新成已读
-                        Log.e("isSeen: ", ""+isSeen);
+                if (resultCode == RESULT_OK) {
+                    boolean isSeen = data.getBooleanExtra("isSeen", false);
+                    Log.e("isSeen: ", "" + isSeen);
+                    if (!isSeen) {  //邮件为未读邮件，更新成已读
+                        Log.e("isSeen: ", "" + isSeen);
                         String id = data.getStringExtra("id");
                         String username = "cuinan@gat.jl";
                         String password = "cuinan963";
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                String result = setSeen(username,password,id);
-                                Log.e("result: ", ""+result);
+                                String result = setSeen(username, password, id);
+                                Log.e("result: ", "" + result);
                                 Message message = new Message();
                                 message.what = 3;
                                 message.obj = result;
                                 handler.sendMessage(message);
                             }
                         }).start();
-                    }else{
+                    } else {
                         Log.e("result: ", "else");
                     }
 
@@ -620,8 +640,8 @@ public class MainFragmentE extends MyLazyFragment
             case DRAFTCODE:
                 if (resultCode == RESULT_OK) {
                     boolean isDelete = data.getBooleanExtra("isDelete", false);
-                    Log.e("delete", ""+isDelete);
-                    if(isDelete){
+                    Log.e("delete", "" + isDelete);
+                    if (isDelete) {
                         ll_drafts.callOnClick();
                     }
 
@@ -629,12 +649,13 @@ public class MainFragmentE extends MyLazyFragment
                 break;
         }
     }
+
     /*将邮件保存到草稿箱*/
-    private void saveFailedEmail(){
+    private void saveFailedEmail() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String request = ResponseMe.saveEmail(policeNumber,title,content,receiveMail);
+                String request = ResponseMe.saveEmail(policeNumber, title, content, receiveMail);
                 Message msg = Message.obtain();
                 msg.what = 5;
                 msg.obj = request;
@@ -643,7 +664,8 @@ public class MainFragmentE extends MyLazyFragment
         }).start();
 
     }
-    private String setSeen(String username,String password,String id) {
+
+    private String setSeen(String username, String password, String id) {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("text/xml");
@@ -653,7 +675,7 @@ public class MainFragmentE extends MyLazyFragment
                         "   <soapenv:Header/>" +
                         "   <soapenv:Body>" +
                         "      <ser:udMailInfo>" +
-                        "         <arg0>{\"username\":\""+username+"\",\"password\":\""+password+"\",\"id\":\""+id+"\"}</arg0>" +
+                        "         <arg0>{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"id\":\"" + id + "\"}</arg0>" +
                         "      </ser:sendMail>" +
                         "   </soapenv:Body>" +
                         "</soapenv:Envelope>");
@@ -672,6 +694,7 @@ public class MainFragmentE extends MyLazyFragment
         }
         return "";
     }
+
     /**
      * {@link View.OnClickListener}
      */
@@ -699,8 +722,10 @@ public class MainFragmentE extends MyLazyFragment
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.VISIBLE);
             ll_rc_create.setVisibility(View.GONE);
+            sContacts.setVisibility(View.GONE);
             initCalendarView();
         } else if (v == tv_mail) {
+            sContacts.setVisibility(View.GONE);
             Drawable drawable = getResources().getDrawable(
                     R.mipmap.rili_default);
             // / 这一步必须要做,否则不会显示.
@@ -725,7 +750,7 @@ public class MainFragmentE extends MyLazyFragment
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    String result = getEmail(username,password);
+                    String result = getEmail(username, password);
                     Message message = new Message();
                     message.what = 4;
                     message.obj = result;
@@ -733,6 +758,7 @@ public class MainFragmentE extends MyLazyFragment
                 }
             }).start();
         } else if (v == ll_mailbox_main) {
+            sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.VISIBLE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -741,6 +767,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_mailbox_recevice_main) {
+            sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.VISIBLE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -749,6 +776,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_mailbox_send) {
+            sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.VISIBLE);
@@ -757,6 +785,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_rc_main) {
+            sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -765,6 +794,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.VISIBLE);
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_rc_create) {
+            sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -773,6 +803,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.VISIBLE);
         } else if (v == tv_mailbox_main_add) {
+            sContacts.setVisibility(View.GONE);
             //发送邮件
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
@@ -782,6 +813,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
         } else if (v == ll_collect) {
+            sContacts.setVisibility(View.GONE);
             //收件箱列表
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.VISIBLE);
@@ -801,7 +833,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
             initSendRecyclerView();
-        } else if (v == ll_drafts) {
+        } else if (v == ll_drafts) {sContacts.setVisibility(View.GONE);
             //草稿箱
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
@@ -811,15 +843,15 @@ public class MainFragmentE extends MyLazyFragment
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
             initdraftsRecyclerView();
-        } else if (v == tv_mailbox_create_title) {
+        } else if (v == tv_mailbox_create_title) {sContacts.setVisibility(View.GONE);
             title = et_mailbox_title.getText().toString();
             content = et_mailbox_content.getText().toString();
             receiveMail = et_mailbox_consignee.getText().toString();
-            if(!TextUtils.isEmpty(title)||!TextUtils.isEmpty(content)||!TextUtils.isEmpty(receiveMail)){
-                Log.e("返回: ","9" );
+            if (!TextUtils.isEmpty(title) || !TextUtils.isEmpty(content) || !TextUtils.isEmpty(receiveMail)) {
+                Log.e("返回: ", "9");
                 mask.setVisibility(View.VISIBLE);
 //                saveFailedEmail();
-            }else{
+            } else {sContacts.setVisibility(View.GONE);
                 clearMailboxSend();
                 ll_mailbox_main.setVisibility(View.VISIBLE);
                 ll_mailbox_recevice_main.setVisibility(View.GONE);
@@ -835,8 +867,7 @@ public class MainFragmentE extends MyLazyFragment
         } else if (v == tv_mailbox_send) {
 //            toast("发送成功！");
 
-
-
+            sContacts.setVisibility(View.GONE);
             title = et_mailbox_title.getText().toString();
             content = et_mailbox_content.getText().toString();
             receiveMail = et_mailbox_consignee.getText().toString();
@@ -845,13 +876,13 @@ public class MainFragmentE extends MyLazyFragment
             sendMail = "cuinan@gat.jl";
 //            sendMail = "";
             sendMailPsd = "cuinan963";
-            if(TextUtils.isEmpty(title)){
+            if (TextUtils.isEmpty(title)) {
                 toast("主题不能为空");
                 return;
-            }else if(TextUtils.isEmpty(content)){
+            } else if (TextUtils.isEmpty(content)) {
                 toast("邮件内容不能为空");
                 return;
-            }else if(TextUtils.isEmpty(receiveMail)){
+            } else if (TextUtils.isEmpty(receiveMail)) {
                 toast("收件人不能为空");
                 return;
             }
@@ -859,7 +890,7 @@ public class MainFragmentE extends MyLazyFragment
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    String result = sendMail(title,content,receiveMail,sendMailName,sendMail,sendMailPsd);
+                    String result = sendMail(title, content, receiveMail, sendMailName, sendMail, sendMailPsd);
                     Message message = new Message();
                     message.what = 1;
                     message.obj = result;
@@ -868,12 +899,11 @@ public class MainFragmentE extends MyLazyFragment
             }).start();
 
 
-
         } else if (v == img_contacts) {
 
             Intent intent = new Intent(getActivity(), MailBoxContactsActivity.class);
             startActivity(intent);
-        } else if (v == tv_mailbox_receive_add) {
+        } else if (v == tv_mailbox_receive_add) {sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.VISIBLE);
@@ -881,7 +911,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_receive_title) {
+        } else if (v == tv_mailbox_receive_title) {sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.VISIBLE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -889,7 +919,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_sendlist_add) {
+        } else if (v == tv_mailbox_sendlist_add) {sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.VISIBLE);
@@ -897,7 +927,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_sendlist_title) {
+        } else if (v == tv_mailbox_sendlist_title) {sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.VISIBLE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -905,7 +935,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_drafts_add) {
+        } else if (v == tv_mailbox_drafts_add) {sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.GONE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.VISIBLE);
@@ -913,7 +943,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
-        } else if (v == tv_mailbox_drafts_title) {
+        } else if (v == tv_mailbox_drafts_title) {sContacts.setVisibility(View.GONE);
             ll_mailbox_main.setVisibility(View.VISIBLE);
             ll_mailbox_recevice_main.setVisibility(View.GONE);
             ll_mailbox_send.setVisibility(View.GONE);
@@ -1011,6 +1041,7 @@ public class MainFragmentE extends MyLazyFragment
 
     private List<NormalModel> mData;
     CollectRecyclerViewAdapter mAdapter;
+
     private void initCollectRecyclerView() {
 
         rv_recevice_mRecyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
@@ -1064,7 +1095,7 @@ public class MainFragmentE extends MyLazyFragment
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String result = getEmail(username,password);
+                String result = getEmail(username, password);
                 Message message = new Message();
                 message.what = 2;
                 message.obj = result;
@@ -1075,7 +1106,8 @@ public class MainFragmentE extends MyLazyFragment
 //        mAdapter.setData(mData);
 //        rv_recevice_mRecyclerView.setAdapter(mAdapter);
     }
-    private String getEmail(String username,String password){
+
+    private String getEmail(String username, String password) {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("text/xml");
@@ -1084,7 +1116,7 @@ public class MainFragmentE extends MyLazyFragment
                         "   <soapenv:Header/>" +
                         "   <soapenv:Body>" +
                         "      <ser:findInboxInfo>" +
-                        "         <arg0>{\"username\":\""+username+"\",\"password\":\""+password+"\"}</arg0>" +
+                        "         <arg0>{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}</arg0>" +
                         "      </ser:findInboxInfo>" +
                         "   </soapenv:Body>" +
                         "</soapenv:Envelope>"
@@ -1104,6 +1136,7 @@ public class MainFragmentE extends MyLazyFragment
         }
         return "";
     }
+
     private void initSendRecyclerView() {
 
         rv_sendlist_mRecyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
@@ -1156,11 +1189,13 @@ public class MainFragmentE extends MyLazyFragment
         mAdapter.setData(mData);
         rv_sendlist_mRecyclerView.setAdapter(mAdapter);
     }
+
     DraftsEmailListAdapter mDraftsAdapter;
     int deletedEmailIndex;
     public static final int DRAFTCODE = 2;
+
     private void initdraftsRecyclerView() {
-        Log.e("删除: ", "0" );
+        Log.e("删除: ", "0");
         rv_drafts_mRecyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -1174,7 +1209,7 @@ public class MainFragmentE extends MyLazyFragment
                 DraftsEmailList.ObjBean email = mDraftsAdapter.getItem(position);
                 Intent intent = new Intent(getContext(), DraftsEmailDetail.class);
                 intent.putExtra("detail", email);
-                startActivityForResult(intent,DRAFTCODE);
+                startActivityForResult(intent, DRAFTCODE);
             }
         });
         mDraftsAdapter.setOnItemChildClickListener(new BGAOnItemChildClickListener() {
@@ -1202,7 +1237,6 @@ public class MainFragmentE extends MyLazyFragment
         });
 
 
-
         String policeNumber = "123456";
         new Thread(new Runnable() {
             @Override
@@ -1217,7 +1251,7 @@ public class MainFragmentE extends MyLazyFragment
 
     }
 
-    public static List<NormalModel> loadNormalModelDatas(String date ,String title, String detail,String email,boolean flag, int type) {
+    public static List<NormalModel> loadNormalModelDatas(String date, String title, String detail, String email, boolean flag, int type) {
         List<NormalModel> datas = new ArrayList<>();
         NormalModel model = new NormalModel();
         model.mDate = date;
@@ -1285,7 +1319,7 @@ public class MainFragmentE extends MyLazyFragment
                 SingleChoose = date.getSolar()[0] + "年" + date.getSolar()[1] + "月" + date.getSolar()[2] + "日 00:00";
                 tv_start_time.setText(SingleChoose);
                 tv_end_time.setText(SingleChoose);
-                addScheduleDate = date.getSolar()[0] + "-" + (date.getSolar()[1]<10?"0"+date.getSolar()[1]:date.getSolar()[1]) + "-" + (date.getSolar()[2]<10?"0"+date.getSolar()[2]:date.getSolar()[2]);
+                addScheduleDate = date.getSolar()[0] + "-" + (date.getSolar()[1] < 10 ? "0" + date.getSolar()[1] : date.getSolar()[1]) + "-" + (date.getSolar()[2] < 10 ? "0" + date.getSolar()[2] : date.getSolar()[2]);
                 //TODO 添加日程（老版）
 //                ll_mailbox_main.setVisibility(View.GONE);
 //                ll_mailbox_recevice_main.setVisibility(View.GONE);
@@ -1383,7 +1417,7 @@ public class MainFragmentE extends MyLazyFragment
         pvTime = new OptionsPickerView.Builder(this.getContext(), new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                tv_start_time.setText(DateUtil.format("yyyy年MM月dd日",selectedDate.getTimeInMillis())+" "+timeList.get(options1)+":00");
+                tv_start_time.setText(DateUtil.format("yyyy年MM月dd日", selectedDate.getTimeInMillis()) + " " + timeList.get(options1) + ":00");
             }
         }).setSubmitText("确定")//确定按钮文字
 //                        .setCancelText("取消")//取消按钮文字
@@ -1486,7 +1520,7 @@ public class MainFragmentE extends MyLazyFragment
         pvTime = new OptionsPickerView.Builder(this.getContext(), new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                tv_end_time.setText(DateUtil.format("yyyy年MM月dd日",selectedDate.getTimeInMillis())+" "+timeList.get(options1)+":00");
+                tv_end_time.setText(DateUtil.format("yyyy年MM月dd日", selectedDate.getTimeInMillis()) + " " + timeList.get(options1) + ":00");
             }
         }).setSubmitText("确定")//确定按钮文字
 //                        .setCancelText("取消")//取消按钮文字

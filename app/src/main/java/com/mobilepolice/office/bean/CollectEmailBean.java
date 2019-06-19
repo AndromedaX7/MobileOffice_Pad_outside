@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.mobilepolice.office.utils.DateUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,8 +49,8 @@ public class CollectEmailBean {
     }
 
     public List<ObjBean> getObj() {
-        Collections.sort(obj);
-        return obj;
+//        Collections.sort(obj);
+        return new ArrayList<>();
     }
 
     public void setObj(List<ObjBean> obj) {
