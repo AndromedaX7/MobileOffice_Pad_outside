@@ -8,14 +8,8 @@ import com.mobilepolice.office.base.MyLazyFragment;
 import com.mobilepolice.office.ui.fragment.MainFragmentA;
 import com.mobilepolice.office.ui.fragment.MainFragmentB;
 import com.mobilepolice.office.ui.fragment.MainFragmentC;
-import com.mobilepolice.office.ui.fragment.MainFragmentD;
-import com.mobilepolice.office.ui.fragment.MainFragmentD2;
 import com.mobilepolice.office.ui.fragment.MainFragmentD_Final;
 import com.mobilepolice.office.ui.fragment.MainFragmentE;
-import com.mobilepolice.office.ui.fragment.TestFragmentA;
-import com.mobilepolice.office.ui.fragment.TestFragmentB;
-import com.mobilepolice.office.ui.fragment.TestFragmentC;
-import com.mobilepolice.office.ui.fragment.TestFragmentD;
 
 import java.util.List;
 

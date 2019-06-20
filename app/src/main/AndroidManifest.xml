@@ -188,6 +188,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/android_update_file_provider" />
         </provider>
+        <provider
+            android:name=".base.ExtraFileProvider"
+            android:authorities="${applicationId}.extrasFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/ext_file_path" />
+        </provider>
         <!-- <provider -->
         <!-- android:name="android.support.v4.content.FileProvider" -->
         <!-- android:authorities="com.mobilepolice.office.fileprovider" -->

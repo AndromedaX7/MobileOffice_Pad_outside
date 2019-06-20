@@ -47,4 +47,15 @@ public class StackLayout extends FrameLayout {
         top = view;
     }
 
+    public void clear() {
+        if (getChildCount() > 0) {
+
+            if (viewStack.size() > 0) {
+                removeViewAt(getChildCount() - 1);
+                addView(viewStack.get(0));
+                viewStack.clear();
+            }
+            top = getChildAt(getChildCount() - 1);
+        }
+    }
 }

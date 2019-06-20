@@ -4,8 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mobilepolice.office.R;
 import com.mobilepolice.office.bean.ContactsData;
 import com.mobilepolice.office.bean.FindDepartmentAll;
@@ -68,6 +65,10 @@ public class ContactsView {
     View p1_View;
     View p2_View;
 
+
+    public void clear() {
+        viewStack.clear();
+    }
 
     protected int getLayoutId() {
         return R.layout.fragment_main_d2;
@@ -156,7 +157,8 @@ public class ContactsView {
                     FindDepartmentAll item = simpleTextAdapter.getItem(position);
                     ArrayList<ContactsData> contactsData = userInfoCache.get(item.getId());
                     viewStack.push(p1_View);
-                    p1.adapter.setNewData(contactsData);
+                    p1.adapter.setData(contactsData);
+                    p1.counter.setText("-- 共" + p1.adapter.getCount() + "人 --");
                     p1_View.invalidate();
 
                 }
@@ -168,8 +170,10 @@ public class ContactsView {
 
     class Page_1_ViewHolder {
         @BindView(R.id.mRecyclerView)
-        RecyclerView mRecyclerView;
+        ListView mRecyclerView;
         ContactAdapter3 adapter = new ContactAdapter3();
+        @BindView(R.id.counter)
+        TextView counter;
 
         @BindView(R.id.mBack)
         ImageView back;
@@ -182,17 +186,14 @@ public class ContactsView {
         Page_1_ViewHolder(View view) {
             ButterKnife.bind(this, view);
             mRecyclerView.setAdapter(adapter);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    ContactsData bean = (ContactsData) adapter.getData().get(position);
-                    if (bean != null) {
-                        viewStack.push(p2_View);
-                        p2.set(bean);
+            mRecyclerView.setOnItemClickListener((parent, view1, position, id) -> {
+                        ContactsData bean = adapter.getItem(position);
+                        if (bean != null) {
+                            viewStack.push(p2_View);
+                            p2.set(bean);
+                        }
                     }
-                }
-            });
+            );
         }
     }
 
@@ -212,6 +213,8 @@ public class ContactsView {
         TextView etCnotactsPhone;
         @BindView(R.id.ll_mess)
         LinearLayout llMess;
+        @BindView(R.id.et_cnotacts_email)
+        TextView et_cnotacts_email;
 
         Page_2_ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -233,6 +236,7 @@ public class ContactsView {
             tvName.setText(data.getName());
             tvTitle.setText(data.getDepartmentName());
             etCnotactsPhone.setText(data.getTelephone());
+            et_cnotacts_email.setText(data.getTelephone() + "@gat.jl");
         }
     }
 }

@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EFF2F7"
     android:gravity="center"
-    android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/ll_mess"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -34,6 +30,7 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:text="技术中心>个人信息"
+                android:textColor="#A9AAAB"
                 android:textSize="18sp" />
 
             <ImageView
@@ -51,8 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+
             android:background="@color/white"
             android:gravity="left|center"
             android:orientation="horizontal"
@@ -95,9 +91,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/selector_white_normal"
             android:gravity="center"
             android:orientation="horizontal">
@@ -120,37 +114,66 @@
                 android:gravity="left|center"
                 android:hint="18186867051"
                 android:text=""
+                android:textColor="#7FADFF"
                 android:textSize="18sp" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/selector_white_normal"
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="邮箱号:"
+                android:textColor="@color/gray"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/et_cnotacts_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="left|center"
+                android:hint="18186867051@gat.jl"
+                android:text=""
+                android:textSize="18sp" />
+
+        </LinearLayout>
         <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:background="@drawable/selector_white_normal"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal">-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:background="@drawable/selector_white_normal"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
 
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="12dp"-->
-                <!--android:text="邮箱号:"-->
-                <!--android:textColor="@color/gray"-->
-                <!--android:textSize="18sp" />-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:text="邮箱号:"-->
+        <!--android:textColor="@color/gray"-->
+        <!--android:textSize="18sp" />-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/et_cnotacts_mail"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:background="@color/white"-->
-                <!--android:gravity="left|center"-->
-                <!--android:text=""-->
-                <!--android:textSize="18sp" />-->
+        <!--<TextView-->
+        <!--android:id="@+id/et_cnotacts_mail"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:gravity="left|center"-->
+        <!--android:text=""-->
+        <!--android:textSize="18sp" />-->
 
         <!--</LinearLayout>-->
 

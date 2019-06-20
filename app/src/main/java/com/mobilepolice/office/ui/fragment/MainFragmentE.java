@@ -246,6 +246,7 @@ public class MainFragmentE extends MyLazyFragment
 
     @OnClick({R.id.tv_contacts})
     void contactSwitcher() {
+        contactsView.clear();
         sContacts.setVisibility(View.VISIBLE);
         ll_rc_create.setVisibility(View.GONE);
         ll_mailbox_main.setVisibility(View.GONE);
@@ -256,6 +257,7 @@ public class MainFragmentE extends MyLazyFragment
         ll_rc_main.setVisibility(View.GONE);
         sHuiyi.setVisibility(View.GONE);
     }
+
     @OnClick({R.id.tv_huiyi})
     void huiYiSwitcher() {
         sContacts.setVisibility(View.GONE);
@@ -268,6 +270,7 @@ public class MainFragmentE extends MyLazyFragment
         ll_rc_main.setVisibility(View.GONE);
         sHuiyi.setVisibility(View.VISIBLE);
     }
+
     public static MainFragmentE newInstance() {
         return new MainFragmentE();
     }
@@ -425,12 +428,13 @@ public class MainFragmentE extends MyLazyFragment
         });
 
 
-        ContactsView contactsView = new ContactsView(getContext());
+        contactsView = new ContactsView(getContext());
         sContacts.addView(contactsView.getView());
         //TODO  我的会议 图片在此设置
-        Glide.with(huiyiContent).load("http://b190.photo.store.qq.com/psb?/V142vzoQ02l6Tv/8rx*JJW8CXzphW*jg.liGO5vu.vZjn3rdzsMIA2sESU!/c/dL4AAAAAAAAA&bo=OAQ4BDgEOAQRECc!&rf=mood_app").into(huiyiContent);
+        Glide.with(huiyiContent).load(R.drawable.my_huiyi).into(huiyiContent);
     }
 
+    ContactsView contactsView;
     private TimeLineController controller;
 
     //TODO 日程接口

@@ -5,14 +5,16 @@ public class EmailBean {
     private String date;
     private String title;
     private String name;
+    private String content;
 
     public EmailBean() {
     }
 
-    public EmailBean(String name, String title, String date) {
+    public EmailBean(String name, String title, String date,String content) {
         this.date = date;
         this.title = title;
         this.name = name;
+        this.content=content;
     }
 
     public String getDate() {
@@ -37,5 +39,13 @@ public class EmailBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
