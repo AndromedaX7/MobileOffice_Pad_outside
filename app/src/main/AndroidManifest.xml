@@ -226,6 +226,7 @@
         <activity android:name=".ui.activity.MyFavoriteActivity" />
         <activity android:name=".ui.activity.EmailDetail" />
         <activity android:name=".ui.activity.DraftsEmailDetail"></activity>
+        <activity android:name=".ui.activity.ScreenShutActivity" />
     </application>
 
 </manifest>
