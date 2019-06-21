@@ -1,27 +1,63 @@
 package com.mobilepolice.office.ui.adapter;
 
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mobilepolice.office.R;
 import com.mobilepolice.office.bean.ApproveList;
 import com.mobilepolice.office.bean.PendingApprove;
+import com.mobilepolice.office.ui.fragment.MainFragmentB;
 import com.mobilepolice.office.utils.DateUtil;
 
 import org.xutils.image.ImageOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ApproveAdapter extends  BaseQuickAdapter<ApproveList.ObjBean, BaseViewHolder> {
-    public ApproveAdapter() {
+public class ApproveAdapter extends  BaseQuickAdapter<PendingApprove.ObjBean, BaseViewHolder> {
+    private Context context;
+    private int surePosition = 0;
+    private boolean changePosition = false;
+    private String isApproval = "0";//未审批 已审批
+    public ApproveAdapter(Context context) {
         super(R.layout.item_grid_pending_work, null);
+        this.context = context;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ApproveList.ObjBean item) {
+    public int getItemCount() {
+
+        return MainFragmentB.getListSize(mData,isApproval);
+
+    }
+
+    @Override
+    protected void convert(BaseViewHolder helper, PendingApprove.ObjBean item) {
+
+//        if (!TextUtils.equals(item.getIsApproval(),isApproval)){
+//
+            if (!changePosition) {
+                //正常position
+                surePosition = helper.getLayoutPosition();
+            }else {
+                if (surePosition<MainFragmentB.getListSize(mData,isApproval)){
+                    item = mData.get(surePosition++);
+                }
+            }
+            while (!TextUtils.equals(isApproval,item.getIsApproval())) {
+                item = mData.get(surePosition++);
+                changePosition = true;
+            }
+//        }
+
         ImageView imageView = helper.getView(R.id.item_img);
+        imageView.setImageResource(R.mipmap.gongwen_img);
 //        imageView.setImageResource(item.getSrc());
         ImageOptions imageOptions = new ImageOptions.Builder()
                 // .setIgnoreGif(false)//是否忽略gif图。false表示不忽略。不写这句，默认是true
@@ -32,10 +68,12 @@ public class ApproveAdapter extends  BaseQuickAdapter<ApproveList.ObjBean, BaseV
 //        if (!TextUtils.isEmpty(item.getApplyOffWordFile())) {
 //            x.image().bind(imageView, item.getApplyOffWordFile(), imageOptions);
 //        }
-        imageView.setImageResource(R.mipmap.gongwen_img);
-        helper.setText(R.id.item_name, item.getTitel());
+//        String[] split = item.getApplyOffWordFile().split(",");
+//        Glide.with(context).load(split[0]).into(imageView);
+        helper.setText(R.id.item_name, item.getTitle());
         helper.setTag(R.id.item_name, item.getId());
-        helper.setText(R.id.item_time, DateUtil.format("MM-dd",DateUtil.parseDate("yyyy-MM-dd HH:mm:ss",item.getCreateDate())));
+//        helper.setText(R.id.item_time, DateUtil.format("MM-dd",DateUtil.parseDate("yyyy-MM-dd HH:mm:ss",item.getCreateDate())));
+        helper.setText(R.id.item_time, item.getCreateDate());
 
         FrameLayout ll_header = helper.getView(R.id.ll_header);
         if (item.getUrgentLevel().equals("1")) {
@@ -75,9 +113,11 @@ public class ApproveAdapter extends  BaseQuickAdapter<ApproveList.ObjBean, BaseV
 //        helper.setText(R.id.item_content, item.getName());
     }
 
-    public void setData(List<ApproveList.ObjBean> data) {
+    public void setData(List<PendingApprove.ObjBean> data,String isApproval) {
         mData.clear();
         mData.addAll(data);
+        surePosition = 0;
+        this.isApproval = isApproval;
         notifyDataSetChanged();
     }
 

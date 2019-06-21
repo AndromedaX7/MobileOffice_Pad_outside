@@ -1,5 +1,6 @@
 package com.mobilepolice.office.ui.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.mobilepolice.office.R;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +30,8 @@ public class ApproveDetailsActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent));
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener((v) -> finish());
-        Glide.with(this).load(getIntent().getStringExtra("img")).into(content);
+        String path = getIntent().getStringExtra("img");
+        Glide.with(this).load(Uri.fromFile(new File(path))).into(content);
     }
 
     @OnClick(R.id.content)

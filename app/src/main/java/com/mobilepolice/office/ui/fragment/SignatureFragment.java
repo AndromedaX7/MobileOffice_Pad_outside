@@ -170,6 +170,20 @@ public class SignatureFragment extends MyLazyFragment implements View.OnClickLis
         //return new SignatureFragment();
     }
 
+    public static SignatureFragment newInstance(String fp,int position,int whichTab,String flag) {
+        SignatureFragment oneFragment = new SignatureFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("data", fp);
+        bundle.putString("flag", flag);
+        bundle.putInt("position", position);
+        bundle.putInt("whichTab", whichTab);
+        oneFragment.setArguments(bundle);
+        return oneFragment;
+        //return new SignatureFragment();
+    }
+
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.layout_signature;
@@ -392,7 +406,10 @@ public class SignatureFragment extends MyLazyFragment implements View.OnClickLis
         // 初始画笔大小
         mDoodleParams.mPaintUnitSize = DoodleView.DEFAULT_SIZE;
 //        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), flag);  //获得图片
-        Bitmap bitmap = BitmapFactory.decodeFile(bundle.getString("data"));
+//        Bitmap bitmap = BitmapFactory.decodeFile(bundle.getString("data"));
+
+        Bitmap bitmap = getBitmap(bundle.getString("flag"));
+
         mDoodle = mDoodleView = new DoodelViewWrapper(getActivity(), bitmap, new IDoodleListener() {
             @Override
             public void onSaved(IDoodle doodle, Bitmap bitmap, Runnable callback) { // 保存图片为jpg格式
@@ -430,7 +447,9 @@ public class SignatureFragment extends MyLazyFragment implements View.OnClickLis
                     urlStr = file.getAbsolutePath();
                     intent.putExtra("flag", approveflag);
                     intent.putExtra("message", rejectedText);
-
+                    intent.putExtra("position",bundle.getInt("position"));
+                    intent.putExtra("whichTab",bundle.getInt("whichTab"));
+                    intent.putExtra("filepath",file.getAbsolutePath());
                     getActivity().setResult(Activity.RESULT_OK, intent);
                     getActivity().finish();
                 } catch (Exception e) {
@@ -940,6 +959,35 @@ public class SignatureFragment extends MyLazyFragment implements View.OnClickLis
                     mView.findViewById(id).setSelected(false);
                 }
             }
+        }
+    }
+
+    public static int getDrableId(Context context, String resName) {
+        return context.getResources().getIdentifier(resName, "drable", context.getPackageName());
+    }
+
+    private Bitmap getBitmap(String content){
+        switch (content){
+            case "1":
+                return ((BitmapDrawable)getResources().getDrawable(R.drawable.img1)).getBitmap();
+            case "2":
+                return ((BitmapDrawable)getResources().getDrawable(R.drawable.img2)).getBitmap();
+            case "3":
+                return ((BitmapDrawable)getResources().getDrawable(R.drawable.img3)).getBitmap();
+            case "4":
+                return ((BitmapDrawable)getResources().getDrawable(R.drawable.img4)).getBitmap();
+            case "5":
+                return ((BitmapDrawable)getResources().getDrawable(R.drawable.img5)).getBitmap();
+            case "6":
+                return ((BitmapDrawable)getResources().getDrawable(R.drawable.img6)).getBitmap();
+            case "7":
+                return ((BitmapDrawable)getResources().getDrawable(R.drawable.img7)).getBitmap();
+            case "8":
+                return ((BitmapDrawable)getResources().getDrawable(R.drawable.img8)).getBitmap();
+            case "9":
+                return ((BitmapDrawable)getResources().getDrawable(R.drawable.img9)).getBitmap();
+            default:
+                return null;
         }
     }
 }
