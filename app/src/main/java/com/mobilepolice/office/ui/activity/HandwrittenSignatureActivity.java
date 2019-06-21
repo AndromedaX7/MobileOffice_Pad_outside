@@ -1,7 +1,9 @@
 package com.mobilepolice.office.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -90,9 +92,9 @@ public class HandwrittenSignatureActivity extends FragmentActivity {
     private MaskImageView mBtnHidePanel;
     private MaskImageView doodle_btn_finish;
 
-    private TextView tv_start;
-    private TextView tv_end;
-    private TextView tv_page;
+    private LinearLayout tv_start;
+    private LinearLayout tv_end;
+    private  TextView tv_page;
 
     private LinearLayout class_id_01;
     private LinearLayout class_id_02;
@@ -114,28 +116,29 @@ public class HandwrittenSignatureActivity extends FragmentActivity {
         type = intent.getIntExtra("type", 2);
         index = intent.getIntExtra("index", 0);
         bean = intent.getParcelableExtra("data");
-        applyOffWordFile = bean.getApplyOffWordFile();
-        applyOffWordFile = applyOffWordFile.replaceAll("10.106.12.104:8789", "192.168.20.228:7121");
-        String[] split = applyOffWordFile.split(",");
-        if (split != null && split.length > 1) {
-            maxLength=split.length;
-            for (String img:split){
-                HttpConnectInterface.getImage(img)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(this::imageRes, this::error, this::onComplete)
-                        .isDisposed();
-            }
-        } else
-            HttpConnectInterface.getImage(applyOffWordFile)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(this::imageRes, this::error, this::onComplete)
-                    .isDisposed();
-        Log.e("onCreate: ", applyOffWordFile);
-        tv_start = (TextView) findViewById(R.id.tv_start); //上一页
-        tv_page = (TextView) findViewById(R.id.tv_page);   //图片页数
-        tv_end = (TextView) findViewById(R.id.tv_end);     // 下一页
+//        applyOffWordFile = bean.getApplyOffWordFile();
+//        applyOffWordFile = applyOffWordFile.replaceAll("D:\\apache-tomcat-ydbg\\webapps", "http://ccsyc.cn:8789");
+
+//        String[] split = applyOffWordFile.split(",");
+//        if (split != null && split.length > 1) {
+//            maxLength=split.length;
+//            for (String img:split){
+//                HttpConnectInterface.getImage(img)
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribeOn(Schedulers.io())
+//                        .subscribe(this::imageRes, this::error, this::onComplete)
+//                        .isDisposed();
+//            }
+//        } else
+//            HttpConnectInterface.getImage(applyOffWordFile)
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribeOn(Schedulers.io())
+//                    .subscribe(this::imageRes, this::error, this::onComplete)
+//                    .isDisposed();
+
+        tv_start = findViewById(R.id.tv_start); //上一页
+        tv_page =  findViewById(R.id.tv_page);   //图片页数
+        tv_end =  findViewById(R.id.tv_end);     // 下一页
         class_id_01 = (LinearLayout) findViewById(R.id.class_id_01);
         class_id_02 = (LinearLayout) findViewById(R.id.class_id_02);
         doodle_btn_back = (MaskImageView) findViewById(R.id.doodle_btn_back);  //返回按钮
@@ -151,9 +154,13 @@ public class HandwrittenSignatureActivity extends FragmentActivity {
 //        imglist.add("4");
 //        initPictureGudieView();
         mPagerAdapter = new HomeViewPagerAdapter(this);
+//        mPagerAdapter.add(bean.getApplyOffWordFile());
+
         viewpager.setAdapter(mPagerAdapter);
         viewpager.setOffscreenPageLimit(fragmentList.size());
         setListener();
+        mPagerAdapter.add(bean.getApplyOffWordFile(),intent.getIntExtra("position",0)
+                ,intent.getIntExtra("whichTab",0),bean.getOverFlag());
     }
 
     private void onComplete() {
@@ -173,7 +180,7 @@ public class HandwrittenSignatureActivity extends FragmentActivity {
             outputStream.write(bytes);
             outputStream.flush();
             outputStream.close();
-            mPagerAdapter.add(file.getAbsolutePath());
+//            mPagerAdapter.add(file.getAbsolutePath());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -211,6 +218,7 @@ public class HandwrittenSignatureActivity extends FragmentActivity {
         class_id_01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 List<String> urlStr = new ArrayList<>();
                 for (int i = 0; i < fragmentList.size(); i++) {
                     SignatureFragment signatureFragment = (SignatureFragment) fragmentList.get(i);
@@ -336,14 +344,14 @@ public class HandwrittenSignatureActivity extends FragmentActivity {
 //                    list.add(SignatureFragment.newInstance(R.drawable.approval_img));
 //                }
 
-                list.add(SignatureFragment.newInstance(imglist.get(i)));
+//                list.add(SignatureFragment.newInstance(imglist.get(i)));
             }
             fragmentList = list;
 
         }
 
-        public void add(String path) {
-            fragmentList.add(SignatureFragment.newInstance(path));
+        public void add(String path,int position,int whichTab,String flag) {
+            fragmentList.add(SignatureFragment.newInstance(path,position,whichTab,flag));
             mPagerAdapter.notifyDataSetChanged();
         }
     }

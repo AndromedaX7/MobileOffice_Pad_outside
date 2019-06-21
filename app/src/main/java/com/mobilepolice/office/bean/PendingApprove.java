@@ -1,5 +1,6 @@
 package com.mobilepolice.office.bean;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -80,6 +81,9 @@ public class PendingApprove {
         private String approveNodeId;
         private String id;
         private String createDate;
+
+        private String isApproval;//已审批 未审批 1 0
+        private String filepath;//图片地址
 
         public String getOverFlag() {
             return overFlag;
@@ -237,5 +241,21 @@ public class PendingApprove {
                 return new ObjBean[size];
             }
         };
+
+        public String getIsApproval() {
+            return isApproval;
+        }
+
+        public void setIsApproval(String isApproval) {
+            this.isApproval = isApproval;
+        }
+
+        public String getFilepath() {
+            return filepath;
+        }
+
+        public void setFilepath(String filepath) {
+            this.filepath = filepath;
+        }
     }
 }

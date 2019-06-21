@@ -8,7 +8,7 @@ import com.mobilepolice.office.base.MyLazyFragment;
 import com.mobilepolice.office.ui.fragment.MainFragmentA;
 import com.mobilepolice.office.ui.fragment.MainFragmentB;
 import com.mobilepolice.office.ui.fragment.MainFragmentC;
-import com.mobilepolice.office.ui.fragment.MainFragmentD;
+import com.mobilepolice.office.ui.fragment.MainFragmentD_Final;
 import com.mobilepolice.office.ui.fragment.MainFragmentE;
 
 
@@ -31,7 +31,7 @@ public final class HomeViewPagerAdapter extends BaseFragmentPagerAdapter<MyLazyF
         list.add(MainFragmentA.newInstance());
         list.add(MainFragmentB.newInstance());
         list.add(MainFragmentC.newInstance());
-        list.add(MainFragmentD.newInstance());
+        list.add(MainFragmentD_Final.newInstance());
         list.add(MainFragmentE.newInstance());
     }
 }

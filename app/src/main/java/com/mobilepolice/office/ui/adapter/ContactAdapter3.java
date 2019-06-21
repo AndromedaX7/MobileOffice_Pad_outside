@@ -67,7 +67,7 @@ public class ContactAdapter3 extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Vh vh;
         if (convertView == null) {
-            convertView = View.inflate(parent.getContext(), R.layout.item_contacts_type, null);
+            convertView = View.inflate(parent.getContext(), R.layout.item_contacts_type2, null);
             vh = new Vh();
             vh.tv_department = convertView.findViewById(R.id.tv_department);
             convertView.setTag(vh);

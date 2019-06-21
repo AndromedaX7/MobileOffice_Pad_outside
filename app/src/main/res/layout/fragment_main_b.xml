@@ -42,7 +42,7 @@
             android:paddingBottom="10dp">
 
             <LinearLayout
-                android:id="@+id/tab2"
+                android:id="@+id/tab_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
@@ -79,7 +79,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="(0)"
-                            android:id="@+id/mGwSize"
+                            android:id="@+id/mGwSize1"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -88,7 +88,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/tab1"
+                android:id="@+id/tab_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
@@ -121,7 +121,7 @@
                             android:textSize="20sp" />
 
                         <TextView
-
+                            android:id="@+id/mGwSize2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="(0)"
@@ -166,6 +166,7 @@
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/mGwSize3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="(0)"

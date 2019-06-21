@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
 
 
     <LinearLayout
@@ -119,105 +121,184 @@
             android:textColor="@color/main_color"
             android:textSize="16sp" />
 
-        <TextView
+
+
+
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewpager"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:layout_margin="@dimen/dp_10"
+        >
+
+        <LinearLayout
             android:id="@+id/tv_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/blue_trans"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="上一页"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_page"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/handweitten_img1"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上一页"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                />
+
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/cut_line"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
+            android:layout_marginBottom="@dimen/dp_10"
             android:text=""
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_end"
+            app:layout_constraintLeft_toRightOf="@+id/tv_start"
+            />
 
-        <TextView
+        <LinearLayout
             android:id="@+id/tv_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/blue_trans"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="下一页"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_below="@+id/viewpager"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/class_id_01"
-            android:layout_width="160dp"
-            android:layout_height="60dp"
-            android:background="@drawable/confirm"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_margin="8dp"
-            android:tag="01">
-
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/tv_page"
+            app:layout_constraintRight_toLeftOf="@+id/class_id_01"
+            >
             <ImageView
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/confirm_img" />
+                android:src="@drawable/handweitten_img2"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:text="下一页"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/class_id_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/tv_end"
+            app:layout_constraintRight_toLeftOf="@+id/class_id_02"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/handweitten_img3"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="同意"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:layout_marginTop="5dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                />
+
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/class_id_02"
-            android:layout_width="160dp"
-            android:layout_height="60dp"
-            android:background="@drawable/reject"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_margin="8dp"
-            android:tag="02">
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/class_id_01"
+            app:layout_constraintRight_toLeftOf="@+id/class_id_03"
+            >
             <ImageView
-                android:layout_width="17dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/reject_img" />
+                android:src="@drawable/handweitten_img4"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:text="驳回"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:layout_marginTop="5dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/class_id_03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/class_id_02"
+            app:layout_constraintRight_toRightOf="parent"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/handweitten_img5"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下一承办人"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                />
+
+
         </LinearLayout>
 
 
-    </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
