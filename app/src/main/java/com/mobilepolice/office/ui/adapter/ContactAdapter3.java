@@ -4,10 +4,13 @@ package com.mobilepolice.office.ui.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mobilepolice.office.R;
 import com.mobilepolice.office.bean.ContactsData;
+import com.mobilepolice.office.myinterface.AddressBookCallback;
+import com.mobilepolice.office.ui.fragment.ContactsView;
 
 import java.util.ArrayList;
 
@@ -44,6 +47,10 @@ public class ContactAdapter3 extends BaseAdapter {
 //        helper.setText(R.id.tv_department, item.getName());
 //    }
 //}
+    private AddressBookCallback callback;
+    public ContactAdapter3(AddressBookCallback callback){
+        this.callback = callback;
+    }
 
 
     private ArrayList<ContactsData> departmentAlls = new ArrayList<>();
@@ -70,16 +77,40 @@ public class ContactAdapter3 extends BaseAdapter {
             convertView = View.inflate(parent.getContext(), R.layout.item_contacts_type2, null);
             vh = new Vh();
             vh.tv_department = convertView.findViewById(R.id.tv_department);
+            vh.et_cnotacts_phone = convertView.findViewById(R.id.et_cnotacts_phone);
+            vh.et_cnotacts_email = convertView.findViewById(R.id.et_cnotacts_email);
+            vh.phone = convertView.findViewById(R.id.phone);
+            vh.email = convertView.findViewById(R.id.email);
             convertView.setTag(vh);
         } else {
             vh = (Vh) convertView.getTag();
         }
         vh.tv_department.setText(getItem(position).getName());
+        vh.et_cnotacts_phone.setText(getItem(position).getTelephone());
+        vh.et_cnotacts_email.setText(getItem(position).getTelephone() + "@gat.jl");
+
+        vh.phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.phoneCallBack(getItem(position).getTelephone());
+            }
+        });
+
+        vh.email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.emailCallBack(getItem(position).getTelephone() + "@gat.jl");
+            }
+        });
         return convertView;
     }
 
     private class Vh {
         private TextView tv_department;
+        private TextView et_cnotacts_phone;
+        private TextView et_cnotacts_email;
+        private ImageView phone;
+        private ImageView email;
     }
 
     public void setData(ArrayList<ContactsData> departmentAlls) {

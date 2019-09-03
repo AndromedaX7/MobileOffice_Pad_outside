@@ -60,7 +60,7 @@ public class LauncherActivity extends MyActivity
 
 
     private void loadingUaacApi() {
-        startActivityFinish(HomeActivity.class);
+        startActivityFinish(Home2Activity.class);
     }
 
     @Override

@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    >
 
     <ImageView
         android:layout_width="30dp"
@@ -11,14 +12,66 @@
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tv_department"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawablePadding="10dp"
         android:gravity="left"
         android:paddingLeft="10dp"
-
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:text="科技通信处"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/et_cnotacts_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@color/white"
+        android:gravity="left|center"
+        android:hint="18186867051"
+        android:text=""
+        android:textColor="#7FADFF"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/et_cnotacts_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@color/white"
+        android:gravity="left|center"
+        android:hint="18186867051@gat.jl"
+        android:text=""
+        android:textSize="18sp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ImageView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/phone_img"
+            android:layout_toLeftOf="@+id/email"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/email_img"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            />
+    </RelativeLayout>
+
+
 </LinearLayout>

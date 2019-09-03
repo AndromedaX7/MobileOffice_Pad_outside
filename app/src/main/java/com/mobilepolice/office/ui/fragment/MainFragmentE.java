@@ -1,9 +1,11 @@
 package com.mobilepolice.office.ui.fragment;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -34,6 +37,7 @@ import com.mobilepolice.office.base.MyLazyFragment;
 import com.mobilepolice.office.bean.CalendarScheduleBean;
 import com.mobilepolice.office.bean.CollectEmailBean;
 import com.mobilepolice.office.bean.DraftsEmailList;
+import com.mobilepolice.office.bean.FavoriteBean;
 import com.mobilepolice.office.bean.InsertTaskInfo;
 import com.mobilepolice.office.bean.NormalModel;
 import com.mobilepolice.office.bean.QueryTaskInfo;
@@ -47,6 +51,7 @@ import com.mobilepolice.office.http.ResponseMe;
 import com.mobilepolice.office.ui.activity.DraftsEmailDetail;
 import com.mobilepolice.office.ui.activity.EmailDetail;
 import com.mobilepolice.office.ui.activity.MailBoxContactsActivity;
+import com.mobilepolice.office.ui.activity.NewsDetailedActivity;
 import com.mobilepolice.office.ui.adapter.CollectRecyclerViewAdapter;
 import com.mobilepolice.office.ui.adapter.DraftsEmailListAdapter;
 import com.mobilepolice.office.ui.adapter.SendRecyclerViewAdapter;
@@ -71,6 +76,7 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildLongClickListener;
@@ -219,6 +225,16 @@ public class MainFragmentE extends MyLazyFragment
     @BindView(R.id.sHuiyi)
     FrameLayout sHuiyi;
 
+    //我的收藏
+    @BindView(R.id.ll_collection)
+    LinearLayout ll_collection;
+    @BindView(R.id.tv_collection)
+    TextView tv_collection;
+    @BindView(R.id.mList)
+    RecyclerView mList;
+    private MyFavoriteAdapter adapter = new MyFavoriteAdapter();
+    private ArrayList<FavoriteBean> beans = new ArrayList<>();
+
     private int[] cDate = CalendarUtil.getCurrentDate();
     private String SingleChoose = "";
     private String addScheduleDate = "";
@@ -256,6 +272,7 @@ public class MainFragmentE extends MyLazyFragment
         ll_mailbox_drafts.setVisibility(View.GONE);
         ll_rc_main.setVisibility(View.GONE);
         sHuiyi.setVisibility(View.GONE);
+        ll_collection.setVisibility(View.GONE);
     }
 
     @OnClick({R.id.tv_huiyi})
@@ -269,6 +286,20 @@ public class MainFragmentE extends MyLazyFragment
         ll_mailbox_drafts.setVisibility(View.GONE);
         ll_rc_main.setVisibility(View.GONE);
         sHuiyi.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.tv_collection)
+    void myCollection() {
+        ll_collection.setVisibility(View.VISIBLE);
+        sContacts.setVisibility(View.GONE);
+        ll_rc_create.setVisibility(View.GONE);
+        ll_mailbox_main.setVisibility(View.GONE);
+        ll_mailbox_send.setVisibility(View.GONE);
+        ll_mailbox_recevice_main.setVisibility(View.GONE);
+        ll_mailbox_sendlist.setVisibility(View.GONE);
+        ll_mailbox_drafts.setVisibility(View.GONE);
+        ll_rc_main.setVisibility(View.GONE);
+        sHuiyi.setVisibility(View.GONE);
     }
 
     public static MainFragmentE newInstance() {
@@ -326,6 +357,7 @@ public class MainFragmentE extends MyLazyFragment
     protected void initView() {
         tv_rc.setOnClickListener(this);
         tv_mail.setOnClickListener(this);
+//        tv_collection.setOnClickListener(this);
         ll_mailbox_main.setOnClickListener(this);
         tv_mailbox_main_add.setOnClickListener(this);
 
@@ -432,6 +464,9 @@ public class MainFragmentE extends MyLazyFragment
         sContacts.addView(contactsView.getView());
         //TODO  我的会议 图片在此设置
         Glide.with(huiyiContent).load(R.drawable.my_huiyi).into(huiyiContent);
+
+        //我的收藏
+        initViewCollection();
     }
 
     ContactsView contactsView;
@@ -772,6 +807,7 @@ public class MainFragmentE extends MyLazyFragment
             ll_mailbox_drafts.setVisibility(View.GONE);
             ll_rc_main.setVisibility(View.GONE);
             ll_rc_create.setVisibility(View.GONE);
+            ll_collection.setVisibility(View.GONE);
             String username = "cuinan@gat.jl";
             String password = "cuinan963";
             new Thread(new Runnable() {
@@ -1657,5 +1693,103 @@ public class MainFragmentE extends MyLazyFragment
     @Override
     public boolean statusBarDarkFont() {
         return false;
+    }
+
+    //我的收藏
+    private void initViewCollection() {
+        Cursor query = getActivity().getContentResolver().query(Uri.parse("content://com.access.favorite.info"), null, null, null, null);
+        if (query != null) {
+            while (query.moveToNext()) {
+                //   type integer default 0,
+                FavoriteBean bean = new FavoriteBean();
+                bean.setCid(query.getString(query.getColumnIndex("cid")));
+                bean.setTime(query.getString(query.getColumnIndex("time")));
+                bean.setImg(query.getString(query.getColumnIndex("img")));
+                bean.setTitle(query.getString(query.getColumnIndex("title")));
+                bean.setFlag(query.getInt(query.getColumnIndex("type")) == 0 ? "NEWS" : "NOTICE");
+                beans.add(bean);
+            }
+            Log.e("onCreate: ", "Count->" + query.getCount());
+            query.close();
+            adapter.setData(beans);
+        }
+        mList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mList.setAdapter(adapter);
+    }
+
+    class MyFavoriteAdapter extends RecyclerView.Adapter<MyFavoriteAdapter.VH> implements View.OnClickListener {
+
+
+        private ArrayList<FavoriteBean> beans = new ArrayList<>();
+
+        public void setData(ArrayList<FavoriteBean> beans) {
+            this.beans = new ArrayList<>(beans);
+            notifyDataSetChanged();
+        }
+
+        @NonNull
+        @Override
+        public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            return new VH(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_my_favorite, viewGroup, false));
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull VH vh, int i) {
+            vh.itemView.setTag(i);
+            vh.itemView.setOnClickListener(this);
+            FavoriteBean bean = beans.get(i);
+            vh.content.setText(bean.getTitle().replaceAll("<br>", "\n"));
+            vh.content.setVisibility(View.INVISIBLE);
+            vh.title.setText(bean.getTitle().replaceAll("<br>", "\n"));
+            vh.time.setText(bean.getTime());
+            if (beans.get(i).getFlag().equals("NEWS")) {
+                vh.img.setVisibility(View.VISIBLE);
+                vh.imgTitle.setVisibility(View.GONE);
+                vh.time.setText(bean.getTime());
+                if (bean.getImg() != null)
+                    Glide.with(vh.img).load(bean.getImg().replaceAll("10.106.18.75:8081", "192.168.20.228:7124")).into(vh.img);
+            } else {
+                vh.img.setVisibility(View.GONE);
+                vh.imgTitle.setVisibility(View.VISIBLE);
+                vh.imgTitle.setText(DateUtil.format("yyyy-MM\ndd", Long.parseLong(bean.getTime())));
+                vh.time.setText(DateUtil.format("yyyy-MM-dd", Long.parseLong(bean.getTime())));
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return beans.size();
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = (int) v.getTag();
+            FavoriteBean bean = beans.get(position);
+            Intent intent = new Intent(v.getContext(), NewsDetailedActivity.class);
+            intent.putExtra("flag", bean.getFlag());
+            intent.putExtra("contentId", bean.getCid());
+            intent.putExtra("titleIn", bean.getTitle());
+            intent.putExtra("img", bean.getImg());
+            intent.putExtra("time", bean.getTitle());
+            startActivity(intent);
+        }
+
+        class VH extends RecyclerView.ViewHolder {
+            @BindView(R.id.img)
+            ImageView img;
+            @BindView(R.id.imgTitle)
+            TextView imgTitle;
+            @BindView(R.id.title)
+            TextView title;
+            @BindView(R.id.content)
+            TextView content;
+            @BindView(R.id.time)
+            TextView time;
+
+            public VH(@NonNull View itemView) {
+                super(itemView);
+                ButterKnife.bind(this, itemView);
+            }
+        }
     }
 }

@@ -2,9 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 按压状态 -->
-    <item android:drawable="@mipmap/xinwen_selected" android:state_checked="true" />
+    <item android:state_selected ="true" android:drawable="@mipmap/xinwen_selected"  />
 
     <!-- 默认状态 -->
-    <item android:drawable="@mipmap/xinwen" />
+    <item android:state_selected ="false" android:drawable="@mipmap/xinwen" />
 
 </selector>

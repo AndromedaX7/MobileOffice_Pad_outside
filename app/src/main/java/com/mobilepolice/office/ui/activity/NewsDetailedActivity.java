@@ -236,6 +236,11 @@ public class NewsDetailedActivity extends MyActivity {
         img = getIntent().getStringExtra("img");
         flag = getIntent().getStringExtra("flag");
         time = getIntent().getStringExtra("time");
+        if (checkCollection()) {
+            forward.setImageDrawable(getResources().getDrawable(R.drawable.forward_active));
+        } else {
+            forward.setImageDrawable(getResources().getDrawable(R.drawable.forward));
+        }
     }
 
     private String contentId;
@@ -248,23 +253,32 @@ public class NewsDetailedActivity extends MyActivity {
         ButterKnife.bind(this);
     }
 
+
     @OnClick(R.id.forward)
     public void onInsertItem() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("cid", contentId);
-        contentValues.put("title", titleIn);
-        contentValues.put("img", img);
-        contentValues.put("type", type);
-        contentValues.put("time", time);
+        if (checkCollection()) {
+            getContentResolver().delete(Uri.parse("content://com.access.favorite.info"), "cid=?", new String[]{contentId});
+            forward.setImageDrawable(getResources().getDrawable(R.drawable.forward));
+            Toast.makeText(this, "已取消收藏", Toast.LENGTH_SHORT).show();
+        } else {
+            contentValues.put("cid", contentId);
+            contentValues.put("title", titleIn);
+            contentValues.put("img", img);
+            contentValues.put("type", type);
+            contentValues.put("time", time);
+            getContentResolver().insert(Uri.parse("content://com.access.favorite.info"), contentValues);
+            forward.setImageDrawable(getResources().getDrawable(R.drawable.forward_active));
+            Toast.makeText(this, "已收藏成功", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean checkCollection(){
         Cursor query = getContentResolver().query(Uri.parse("content://com.access.favorite.info"), null, "cid=?", new String[]{contentId}, null);
         if (query != null && query.moveToFirst()) {
-            String cid = query.getString(query.getColumnIndex("cid"));
-            int type = query.getInt(query.getColumnIndex("type"));
-            Log.e("onInsertItem: ", type + "::" + cid);
-            Toast.makeText(this, "您已收藏过该新闻", Toast.LENGTH_SHORT).show();
-        } else {
-            getContentResolver().insert(Uri.parse("content://com.access.favorite.info"), contentValues);
-            Toast.makeText(this, "已收藏成功", Toast.LENGTH_SHORT).show();
+            return true;
+        }else {
+            return false;
         }
     }
 }

@@ -608,11 +608,11 @@ public class SignatureFragment extends MyLazyFragment implements View.OnClickLis
     @Override
     public void onClick(final View v) {
         if (v.getId() == R.id.btn_pen_hand) {
-            mEditSizeSeekBar.setProgress(5);
-            mEditSizeSeekBar.setMax(5);
-            mEditSizeSeekBar.invalidate();
+//            mEditSizeSeekBar.setProgress(5);
+//            mEditSizeSeekBar.setMax(5);
+//            mEditSizeSeekBar.invalidate();
             mDoodle.setPen(DoodlePen.BRUSH);
-            mEditSizeSeekBar.setProgress(5);
+            mEditSizeSeekBar.setProgress(1);
             mEditSizeSeekBar.setMax(5);
             mEditSizeSeekBar.invalidate();
             mDoodle.setPen(DoodlePen.BRUSH);

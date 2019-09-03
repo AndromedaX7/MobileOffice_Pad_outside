@@ -17,6 +17,7 @@ import com.mobilepolice.office.bean.ContactsData;
 import com.mobilepolice.office.bean.FindDepartmentAll;
 import com.mobilepolice.office.http.HttpConnectInterface;
 import com.mobilepolice.office.http.HttpTools;
+import com.mobilepolice.office.myinterface.AddressBookCallback;
 import com.mobilepolice.office.ui.adapter.ContactAdapter3;
 import com.mobilepolice.office.ui.adapter.SimpleTextAdapter;
 import com.mobilepolice.office.widget.StackLayout;
@@ -61,9 +62,9 @@ public class ContactsView {
 
     Page_0_ViewHolder p0;
     Page_1_ViewHolder p1;
-    Page_2_ViewHolder p2;
+//    Page_2_ViewHolder p2;
     View p1_View;
-    View p2_View;
+//    View p2_View;
 
 
     public void clear() {
@@ -78,8 +79,8 @@ public class ContactsView {
     protected void initView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.user_info_d2_p0, viewStack, false);
         p1_View = LayoutInflater.from(getContext()).inflate(R.layout.user_info_d2_p1, viewStack, false);
-        p2_View = LayoutInflater.from(getContext()).inflate(R.layout.user_info_d2_p2, viewStack, false);
-        p2 = new Page_2_ViewHolder(p2_View);
+//        p2_View = LayoutInflater.from(getContext()).inflate(R.layout.user_info_d2_p2, viewStack, false);
+//        p2 = new Page_2_ViewHolder(p2_View);
         p1 = new Page_1_ViewHolder(p1_View);
         p0 = new Page_0_ViewHolder(view);
         viewStack.push(view);
@@ -171,7 +172,17 @@ public class ContactsView {
     class Page_1_ViewHolder {
         @BindView(R.id.mRecyclerView)
         ListView mRecyclerView;
-        ContactAdapter3 adapter = new ContactAdapter3();
+        ContactAdapter3 adapter = new ContactAdapter3(new AddressBookCallback() {
+            @Override
+            public void phoneCallBack(String phoneNum) {
+                callPhone(phoneNum);
+            }
+
+            @Override
+            public void emailCallBack(String email) {
+
+            }
+        });
         @BindView(R.id.counter)
         TextView counter;
 
@@ -186,14 +197,16 @@ public class ContactsView {
         Page_1_ViewHolder(View view) {
             ButterKnife.bind(this, view);
             mRecyclerView.setAdapter(adapter);
-            mRecyclerView.setOnItemClickListener((parent, view1, position, id) -> {
-                        ContactsData bean = adapter.getItem(position);
-                        if (bean != null) {
-                            viewStack.push(p2_View);
-                            p2.set(bean);
-                        }
-                    }
-            );
+//            mRecyclerView.setOnItemClickListener((parent, view1, position, id) -> {
+//
+//                        if (bean != null) {
+////                            viewStack.push(p2_View);
+////                            p2.set(bean);
+//                        }
+//                    }
+//            );
+
+
         }
     }
 
