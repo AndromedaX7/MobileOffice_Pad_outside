@@ -20,11 +20,12 @@ import org.xutils.image.ImageOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApproveAdapter extends  BaseQuickAdapter<PendingApprove.ObjBean, BaseViewHolder> {
+public class ApproveAdapter extends BaseQuickAdapter<PendingApprove.ObjBean, BaseViewHolder> {
     private Context context;
     private int surePosition = 0;
     private boolean changePosition = false;
     private String isApproval = "0";//未审批 已审批
+
     public ApproveAdapter(Context context) {
         super(R.layout.item_grid_pending_work, null);
         this.context = context;
@@ -33,7 +34,7 @@ public class ApproveAdapter extends  BaseQuickAdapter<PendingApprove.ObjBean, Ba
     @Override
     public int getItemCount() {
 
-        return MainFragmentB.getListSize(mData,isApproval);
+        return MainFragmentB.getListSize(mData, isApproval);
 
     }
 
@@ -42,18 +43,18 @@ public class ApproveAdapter extends  BaseQuickAdapter<PendingApprove.ObjBean, Ba
 
 //        if (!TextUtils.equals(item.getIsApproval(),isApproval)){
 //
-            if (!changePosition) {
-                //正常position
-                surePosition = helper.getLayoutPosition();
-            }else {
-                if (surePosition<MainFragmentB.getListSize(mData,isApproval)){
-                    item = mData.get(surePosition++);
-                }
-            }
-            while (!TextUtils.equals(isApproval,item.getIsApproval())) {
+        if (!changePosition) {
+            //正常position
+            surePosition = helper.getLayoutPosition();
+        } else {
+            if (surePosition < MainFragmentB.getListSize(mData, isApproval)) {
                 item = mData.get(surePosition++);
-                changePosition = true;
             }
+        }
+        while (!TextUtils.equals(isApproval, item.getIsApproval())) {
+            item = mData.get(surePosition++);
+            changePosition = true;
+        }
 //        }
 
         ImageView imageView = helper.getView(R.id.item_img);
@@ -113,7 +114,7 @@ public class ApproveAdapter extends  BaseQuickAdapter<PendingApprove.ObjBean, Ba
 //        helper.setText(R.id.item_content, item.getName());
     }
 
-    public void setData(List<PendingApprove.ObjBean> data,String isApproval) {
+    public void setData(List<PendingApprove.ObjBean> data, String isApproval) {
         mData.clear();
         mData.addAll(data);
         surePosition = 0;

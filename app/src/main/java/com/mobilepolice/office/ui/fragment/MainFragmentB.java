@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.mobilepolice.office.base.MyApplication;
 import com.mobilepolice.office.base.MyLazyFragment;
 import com.mobilepolice.office.bean.ApproveDetails;
 import com.mobilepolice.office.bean.ApproveList;
+import com.mobilepolice.office.bean.Case;
 import com.mobilepolice.office.bean.PendingApprove;
 import com.mobilepolice.office.bean.PendingWorkBean;
 import com.mobilepolice.office.bean.SimpleBean;
@@ -36,6 +38,7 @@ import com.mobilepolice.office.pdf.PdfSimpleUtil;
 import com.mobilepolice.office.ui.activity.ApproveDetailsActivity;
 import com.mobilepolice.office.ui.activity.HandwrittenSignatureActivity;
 import com.mobilepolice.office.ui.adapter.ApproveAdapter;
+import com.mobilepolice.office.ui.adapter.CaseAdapter;
 import com.mobilepolice.office.ui.adapter.PendingApproveAdapter;
 import com.mobilepolice.office.ui.adapter.PendingWorkAdapter;
 
@@ -79,17 +82,23 @@ public class MainFragmentB extends MyLazyFragment {
     @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
 
-    PendingWorkAdapter pendingWorkAdapter;
-    PendingApproveAdapter pendingApprove;
-    ApproveAdapter approveAdapter;
-    ApproveAdapter approveAdapter2;
-    PendingWorkBean bean;
+    @BindView(R.id.check_num)
+    TextView check_num;
+    @BindView(R.id.checkedFinish_num)
+    TextView checkedFinish_num;
+
+    private ApproveAdapter approveAdapter;
+    private ApproveAdapter approveAdapter2;
+    private CaseAdapter caseAdapter;
+
+    private List<Case> caseList = new ArrayList<>();
+    private List<Case> caseList2 = new ArrayList<>();
     /*当前显示的tab索引*/
     int whichTab = 0;
     LinearLayout mask;
 
-    private HashMap<String, ApproveDetails> detailsCache = new HashMap<>();
-    private HashMap<String, String> approvePathCache = new HashMap<>();
+//    private HashMap<String, ApproveDetails> detailsCache = new HashMap<>();
+//    private HashMap<String, String> approvePathCache = new HashMap<>();
 
     public static MainFragmentB newInstance() {
         return new MainFragmentB();
@@ -110,13 +119,15 @@ public class MainFragmentB extends MyLazyFragment {
     protected void initView() {
 //        initPendingApproveAdapter();
         initApproveAdapter();
+        initCaseAdapter();
         initRecyclerView();
+
 //        requirePendingApproveTask(MyApplication.userCode);
-//        requireApproveTask(MyApplication.userCode);
+        requireApproveTask(MyApplication.userCode);
 //        refresh.setRefreshing(true);
         refresh.setOnRefreshListener(() -> {
 //            requirePendingApproveTask(MyApplication.userCode);
-//            requireApproveTask(MyApplication.userCode);
+            requireApproveTask(MyApplication.userCode);
 //            current = null;
             approveAdapter.notifyDataSetChanged();
             approveAdapter2.notifyDataSetChanged();
@@ -150,10 +161,14 @@ public class MainFragmentB extends MyLazyFragment {
                 (findViewById(R.id.bar1)).setBackgroundColor(Color.parseColor("#27437f"));
                 ((TextView) findViewById(R.id.text2)).setTextColor(Color.parseColor("#6d6d6d"));
                 (findViewById(R.id.bar2)).setBackgroundColor(Color.parseColor("#ffffff"));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                 mRecyclerView.setAdapter(approveAdapter);
-                approveAdapter.setData(list1,"0");
+                approveAdapter.setData(list1, "0");
+                check_num.setText("(" + list1.size() +")");
+                checkedFinish_num.setText("(" + caseList2.size() +")");
             }
         });
+
         tab_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,9 +179,9 @@ public class MainFragmentB extends MyLazyFragment {
                 (findViewById(R.id.bar1)).setBackgroundColor(Color.parseColor("#27437f"));
                 ((TextView) findViewById(R.id.text2)).setTextColor(Color.parseColor("#6d6d6d"));
                 (findViewById(R.id.bar2)).setBackgroundColor(Color.parseColor("#ffffff"));
-//                initPendingWork2();
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 mRecyclerView.setAdapter(approveAdapter);
-                approveAdapter.setData(list2,"0");
+                approveAdapter.setData(list2, "0");
             }
         });
         tab3.setOnClickListener(new View.OnClickListener() {
@@ -179,9 +194,11 @@ public class MainFragmentB extends MyLazyFragment {
                 (findViewById(R.id.bar1)).setBackgroundColor(Color.parseColor("#27437f"));
                 ((TextView) findViewById(R.id.text2)).setTextColor(Color.parseColor("#6d6d6d"));
                 (findViewById(R.id.bar2)).setBackgroundColor(Color.parseColor("#ffffff"));
-//                initPendingWork2();
-                mRecyclerView.setAdapter(approveAdapter);
-                approveAdapter.setData(list3,"0");
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRecyclerView.setAdapter(caseAdapter);
+                caseAdapter.setData(caseList);
+                check_num.setText("(" + caseList.size() +")");
+                checkedFinish_num.setText("(" + caseList2.size() +")");
             }
         });
         /*已审批*/
@@ -198,17 +215,20 @@ public class MainFragmentB extends MyLazyFragment {
                 (findViewById(R.id.bar2)).setBackgroundColor(Color.parseColor("#27437f"));
                 ((TextView) findViewById(R.id.text1)).setTextColor(Color.parseColor("#6d6d6d"));
                 (findViewById(R.id.bar1)).setBackgroundColor(Color.parseColor("#ffffff"));
+                check_num.setTextColor(Color.parseColor("#6d6d6d"));
+                checkedFinish_num.setTextColor(Color.parseColor("#1f1f1f"));
 
-                mRecyclerView.setAdapter(approveAdapter2);
                 switch (whichTab) {
                     case 0:
-                        approveAdapter2.setData(list1,"1");
+                        mRecyclerView.setAdapter(approveAdapter2);
+                        approveAdapter2.setData(list1, "1");
                         break;
                     case 1:
-                        approveAdapter2.setData(list2,"1");
+                        approveAdapter2.setData(list2, "1");
                         break;
                     case 2:
-                        approveAdapter2.setData(list3,"1");
+                        mRecyclerView.setAdapter(caseAdapter);
+                        caseAdapter.setData(caseList2);
                         break;
                 }
             }
@@ -227,16 +247,20 @@ public class MainFragmentB extends MyLazyFragment {
                 (findViewById(R.id.bar1)).setBackgroundColor(Color.parseColor("#27437f"));
                 ((TextView) findViewById(R.id.text2)).setTextColor(Color.parseColor("#6d6d6d"));
                 (findViewById(R.id.bar2)).setBackgroundColor(Color.parseColor("#ffffff"));
-                mRecyclerView.setAdapter(approveAdapter);
+                checkedFinish_num.setTextColor(Color.parseColor("#6d6d6d"));
+                check_num.setTextColor(Color.parseColor("#1f1f1f"));
+
                 switch (whichTab) {
                     case 0:
-                        approveAdapter.setData(list1,"0");
+                        mRecyclerView.setAdapter(approveAdapter);
+                        approveAdapter.setData(list1, "0");
                         break;
                     case 1:
-                        approveAdapter.setData(list2,"0");
+                        approveAdapter.setData(list2, "0");
                         break;
                     case 2:
-                        approveAdapter.setData(list3,"0");
+                        mRecyclerView.setAdapter(caseAdapter);
+                        caseAdapter.setData(caseList);
                         break;
                 }
             }
@@ -262,48 +286,55 @@ public class MainFragmentB extends MyLazyFragment {
         setList2Data();
         setList3Data();
 
-        approveAdapter.setData(list1,"0");
+        setCaseList();
+        setCaseList2();
+
+        approveAdapter.setData(list1, "0");
+        caseAdapter.setData(caseList);
         myRefresh();
     }
 
     private void initRecyclerView() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         approveAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         approveAdapter2.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        caseAdapter.openLoadAnimation();
 //        pendingApprove.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
     }
 
     /**
-     * 业务审批 测试接口
+     * 公文审批 测试接口
+     *
      * @param s
      */
     private void requireApproveTask(String s) {
-//        HttpConnectInterface.approveList(s)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(this::approveList, this::err, this::onComplete)
-//                .isDisposed();
+        HttpConnectInterface.approveList(s)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::approveList, this::err, this::onComplete)
+                .isDisposed();
     }
 
-//    private void approveList(PendingApprove o) {
+
+    private void approveList(ApproveList o) {
+        Log.e("业务审批", o.toString());
 //        if (o.isSuccess()) {
 //            approveAdapter.setData(o.getObj());
 //            list2 = new ArrayList<>(o.getObj());
 //            mGwSize2.setText("(" + o.getObj().size() + ")");
 //        }
-//    }
-
-    private void myRefresh(){
-        mGwSize1.setText("(" + getListSize(list1,"0") + ")");
-        mGwSize2.setText("(" + getListSize(list2,"0") + ")");
-        mGwSize3.setText("(" + getListSize(list3,"0") + ")");
     }
 
-    public static int getListSize(List<PendingApprove.ObjBean> list,String isApproval){
+    private void myRefresh() {
+        mGwSize1.setText("(" + getListSize(list1, "0") + ")");
+        mGwSize2.setText("(" + getListSize(list2, "0") + ")");
+        mGwSize3.setText("(" + (caseList.size() + caseList2.size()) + ")");
+    }
+
+    public static int getListSize(List<PendingApprove.ObjBean> list, String isApproval) {
         int n = 0;
-        for (int i = 0; i<list.size();i++){
-            if (TextUtils.equals(isApproval,list.get(i).getIsApproval())){
+        for (int i = 0; i < list.size(); i++) {
+            if (TextUtils.equals(isApproval, list.get(i).getIsApproval())) {
                 n++;
             }
         }
@@ -323,11 +354,11 @@ public class MainFragmentB extends MyLazyFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 PendingApprove.ObjBean objBean = approveAdapter.getItem(position);
-                Intent intent = new Intent(getContext(),HandwrittenSignatureActivity.class);
-                intent.putExtra("data",objBean);
-                intent.putExtra("position",position);
-                intent.putExtra("whichTab",whichTab);
-                startActivityForResult(intent,0x100);
+                Intent intent = new Intent(getContext(), HandwrittenSignatureActivity.class);
+                intent.putExtra("data", objBean);
+                intent.putExtra("position", position);
+                intent.putExtra("whichTab", whichTab);
+                startActivityForResult(intent, 0x100);
 //                startActivity(new Intent(getContext(), ApproveDetailsActivity.class).putExtra("img", approveAdapter.getItem(position).getApproveImage().replaceAll("10.106.12.104:8789", "192.168.20.228:7121")));
 //                Glide.with(approveImage).load().into(approveImage);
 //                mask.setVisibility(View.VISIBLE);
@@ -349,50 +380,60 @@ public class MainFragmentB extends MyLazyFragment {
                         break;
                 }
                 Intent intent = new Intent(getContext(), ApproveDetailsActivity.class);
-                intent.putExtra("img",filePath);
+                intent.putExtra("img", filePath);
                 startActivity(intent);
             }
         });
     }
 
-
-    private PendingApprove.ObjBean current = null;
-
-    private void initPendingApproveAdapter() {
-        pendingApprove = new PendingApproveAdapter();
-        pendingApprove.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+    private void initCaseAdapter() {
+        caseAdapter = new CaseAdapter();
+        caseAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (current == null) {
-                    Intent intent = new Intent(getContext(), HandwrittenSignatureActivity.class);
-                    intent.putExtra("data", pendingApprove.getItem(position)).putExtra("type", -1);
-                    startActivityForResult(intent, 0X7FC1);
-                    current = pendingApprove.getItem(position);//292D6F56B5FE4C23991E2529762CBA57
-                    ApproveDetails approveDetails = detailsCache.get(current.getRequestid());
-                    if (approveDetails == null)
-                        HttpConnectInterface.findApplyInfo(current.getRequestid())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribeOn(Schedulers.io())
-                                .subscribe(this::details, this::err, this::onComplete)
-                                .isDisposed();
-                }
 
-            }
-
-            private void onComplete() {
-
-            }
-
-            private void err(Throwable throwable) {
-                throwable.printStackTrace();
-            }
-
-            private void details(ApproveDetails approveDetails) {
-                if (approveDetails.isSuccess())
-                    detailsCache.put(approveDetails.getObj().getId(), approveDetails);
             }
         });
     }
+
+
+//    private PendingApprove.ObjBean current = null;
+
+//    private void initPendingApproveAdapter() {
+//        pendingApprove = new PendingApproveAdapter();
+//        pendingApprove.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                if (current == null) {
+//                    Intent intent = new Intent(getContext(), HandwrittenSignatureActivity.class);
+//                    intent.putExtra("data", pendingApprove.getItem(position)).putExtra("type", -1);
+//                    startActivityForResult(intent, 0X7FC1);
+//                    current = pendingApprove.getItem(position);//292D6F56B5FE4C23991E2529762CBA57
+//                    ApproveDetails approveDetails = detailsCache.get(current.getRequestid());
+//                    if (approveDetails == null)
+//                        HttpConnectInterface.findApplyInfo(current.getRequestid())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribeOn(Schedulers.io())
+//                                .subscribe(this::details, this::err, this::onComplete)
+//                                .isDisposed();
+//                }
+//
+//            }
+//
+//            private void onComplete() {
+//
+//            }
+//
+//            private void err(Throwable throwable) {
+//                throwable.printStackTrace();
+//            }
+//
+//            private void details(ApproveDetails approveDetails) {
+//                if (approveDetails.isSuccess())
+//                    detailsCache.put(approveDetails.getObj().getId(), approveDetails);
+//            }
+//        });
+//    }
 
 //    private void requirePendingApproveTask(String s) {
 //        HttpConnectInterface.requirePendingApproveTask(s)
@@ -432,15 +473,15 @@ public class MainFragmentB extends MyLazyFragment {
     protected void initData() {
     }
 
-    private void initItemData1() {
-        mRecyclerView.setAdapter(approveAdapter);
-    }
+//    private void initItemData1() {
+//        mRecyclerView.setAdapter(approveAdapter);
+//    }
 
 
-    private void initPendingWork(List<PendingApprove.ObjBean> list,String isApproval) {
+//    private void initPendingWork(List<PendingApprove.ObjBean> list, String isApproval) {
 //        ApproveAdapter p = new ApproveAdapter(getContext());
-        approveAdapter.setData(list,isApproval);
-    }
+//        approveAdapter.setData(list, isApproval);
+//    }
 
 
 //    private void initPendingWork2() {
@@ -482,28 +523,28 @@ public class MainFragmentB extends MyLazyFragment {
 //            current = null;
 //        }
 
-        if (resultCode == RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
 
                 case 0x100:
-                    int position = data.getIntExtra("position",0);
-                    int whichTab = data.getIntExtra("whichTab",0);
+                    int position = data.getIntExtra("position", 0);
+                    int whichTab = data.getIntExtra("whichTab", 0);
                     String filepath = data.getStringExtra("filepath");
-                    Log.e("position + whichTab",position+ "------" + whichTab);
-                    switch (whichTab){
+                    Log.e("position + whichTab", position + "------" + whichTab);
+                    switch (whichTab) {
                         case 0:
                             list1.get(position).setIsApproval("1");
                             list1.get(position).setFilepath(filepath);
-                            approveAdapter.setData(list1,"0");
+                            approveAdapter.setData(list1, "0");
                             break;
                         case 1:
                             list2.get(position).setIsApproval("1");
-                            approveAdapter.setData(list2,"0");
+                            approveAdapter.setData(list2, "0");
                             list2.get(position).setFilepath(filepath);
                             break;
                         case 2:
                             list3.get(position).setIsApproval("1");
-                            approveAdapter.setData(list3,"0");
+                            approveAdapter.setData(list3, "0");
                             list3.get(position).setFilepath(filepath);
                             break;
                     }
@@ -516,85 +557,85 @@ public class MainFragmentB extends MyLazyFragment {
         }
     }
 
-    private void approveRejected(String base64, String rejectedData) {
-        String reqId = current.getRequestid();
-        HttpConnectInterface.rejectedWorkFlow(current.getRequestid(), current.getApprovePerson(), current.getApplyPerson(), rejectedData, base64)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe((o -> this.genPdf(o, reqId)), this::err, this::onComplete)
-                .isDisposed();
-    }
+//    private void approveRejected(String base64, String rejectedData) {
+//        String reqId = current.getRequestid();
+//        HttpConnectInterface.rejectedWorkFlow(current.getRequestid(), current.getApprovePerson(), current.getApplyPerson(), rejectedData, base64)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe((o -> this.genPdf(o, reqId)), this::err, this::onComplete)
+//                .isDisposed();
+//    }
 
-    private void approveAgree(String base64) {
-        String schema = detailsCache.get(current.getRequestid()).getObj().getSchema();
-        String reqId = current.getRequestid();
-        HttpConnectInterface.approve(current.getRequestid(), current.getApproveNodeId(), current.getApprovePerson(), current.getApplyPerson(), schema, "2", base64)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe((o -> this.genPdf(o, reqId)), this::err, this::onComplete)
-                .isDisposed();
-        current = null;
-    }
+//    private void approveAgree(String base64) {
+//        String schema = detailsCache.get(current.getRequestid()).getObj().getSchema();
+//        String reqId = current.getRequestid();
+//        HttpConnectInterface.approve(current.getRequestid(), current.getApproveNodeId(), current.getApprovePerson(), current.getApplyPerson(), schema, "2", base64)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe((o -> this.genPdf(o, reqId)), this::err, this::onComplete)
+//                .isDisposed();
+//        current = null;
+//    }
 
-    private void genPdf(SimpleBean o, String reqId) {
-        if (o.isSuccess()) {
-            File file = new File(getContext().getFilesDir(), "/pdf");
-            file.mkdirs();
-            File pdf = new File(file, reqId + ".pdf");
-            PdfSimpleUtil.imgToPdf(approvePathCache.get(reqId), pdf.getAbsolutePath())
-                    .observeOn(Schedulers.io())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe((s) -> this.pdfChangedBase64(s, reqId), this::err, this::onComplete)
-                    .isDisposed();
-        }
-    }
+//    private void genPdf(SimpleBean o, String reqId) {
+//        if (o.isSuccess()) {
+//            File file = new File(getContext().getFilesDir(), "/pdf");
+//            file.mkdirs();
+//            File pdf = new File(file, reqId + ".pdf");
+//            PdfSimpleUtil.imgToPdf(approvePathCache.get(reqId), pdf.getAbsolutePath())
+//                    .observeOn(Schedulers.io())
+//                    .subscribeOn(Schedulers.io())
+//                    .subscribe((s) -> this.pdfChangedBase64(s, reqId), this::err, this::onComplete)
+//                    .isDisposed();
+//        }
+//    }
 
-    private void pdfChangedBase64(String pdfPath, String reqId) {
-        HttpConnectInterface.loadFileBase64(pdfPath)
-                .observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe((base64 -> this.uploadBase64Pdf(base64, reqId)), this::err, this::onComplete)
-                .isDisposed();
-    }
+//    private void pdfChangedBase64(String pdfPath, String reqId) {
+//        HttpConnectInterface.loadFileBase64(pdfPath)
+//                .observeOn(Schedulers.io())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe((base64 -> this.uploadBase64Pdf(base64, reqId)), this::err, this::onComplete)
+//                .isDisposed();
+//    }
 
-    private void uploadBase64Pdf(String base64, String reqId) {
-        HttpConnectInterface.uploadBase64Pdp(base64, reqId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::uploadBase64PdfResult, this::err, this::onComplete)
-                .isDisposed();
-    }
+//    private void uploadBase64Pdf(String base64, String reqId) {
+//        HttpConnectInterface.uploadBase64Pdp(base64, reqId)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(this::uploadBase64PdfResult, this::err, this::onComplete)
+//                .isDisposed();
+//    }
 
-    private void uploadBase64PdfResult(SimpleBean o) {
-        if (o.isSuccess()) {
-            ToastUtils.show("提交成功");
-//            requirePendingApproveTask(MyApplication.userCode);
-            requireApproveTask(MyApplication.userCode);
-        }
-        Log.e("uploadBase64PdfResult: ", "====END====");
-    }
+//    private void uploadBase64PdfResult(SimpleBean o) {
+//        if (o.isSuccess()) {
+//            ToastUtils.show("提交成功");
+////            requirePendingApproveTask(MyApplication.userCode);
+//            requireApproveTask(MyApplication.userCode);
+//        }
+//        Log.e("uploadBase64PdfResult: ", "====END====");
+//    }
 
 
     public static final int REQ_CODE_SELECT_IMAGE = 100;
     public static final int REQ_CODE_DOODLE = 101;
 
-
-    public static Uri getMediaUriFromPath(Context context, String path) {
-        Uri mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        Cursor cursor = context.getContentResolver().query(mediaUri,
-                null,
-                MediaStore.Images.Media.DISPLAY_NAME + "= ?",
-                new String[]{path.substring(path.lastIndexOf("/") + 1)},
-                null);
-
-        Uri uri = null;
-        if (cursor.moveToFirst()) {
-            uri = ContentUris.withAppendedId(mediaUri,
-                    cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
-        }
-        cursor.close();
-        return uri;
-    }
+//
+//    public static Uri getMediaUriFromPath(Context context, String path) {
+//        Uri mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+//        Cursor cursor = context.getContentResolver().query(mediaUri,
+//                null,
+//                MediaStore.Images.Media.DISPLAY_NAME + "= ?",
+//                new String[]{path.substring(path.lastIndexOf("/") + 1)},
+//                null);
+//
+//        Uri uri = null;
+//        if (cursor.moveToFirst()) {
+//            uri = ContentUris.withAppendedId(mediaUri,
+//                    cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
+//        }
+//        cursor.close();
+//        return uri;
+//    }
 
     @Override
     public boolean isStatusBarEnabled() {
@@ -609,7 +650,7 @@ public class MainFragmentB extends MyLazyFragment {
     }
 
 
-    private void setList1Data(){
+    private void setList1Data() {
         PendingApprove.ObjBean approval1 = new PendingApprove.ObjBean();
         approval1.setTitle("移动警务上架商店");
         approval1.setCreateDate("04/27");
@@ -657,7 +698,7 @@ public class MainFragmentB extends MyLazyFragment {
 
     }
 
-    private void setList2Data(){
+    private void setList2Data() {
         PendingApprove.ObjBean approval1 = new PendingApprove.ObjBean();
         approval1.setTitle("补(换)发证件身份核查");
         approval1.setCreateDate("05/26");
@@ -705,7 +746,7 @@ public class MainFragmentB extends MyLazyFragment {
 
     }
 
-    private void setList3Data(){
+    private void setList3Data() {
         PendingApprove.ObjBean approval1 = new PendingApprove.ObjBean();
         approval1.setTitle("拟报立刑事案件");
         approval1.setCreateDate("03/19");
@@ -750,6 +791,30 @@ public class MainFragmentB extends MyLazyFragment {
         approval5.setApplyOffWordFile("img1");
         approval5.setOverFlag("2");
         list3.add(approval5);
+    }
+
+    private void setCaseList() {
+        for (int i = 0; i < 4; i++) {
+            Case case1 = new Case();
+            case1.setName("XXXXX案件名称");
+            case1.setPolices("张钰琪|王思佳");
+            case1.setType("行政处罚案件");
+            case1.setTime("2019/9/1");
+            case1.setState("审批");
+            caseList.add(case1);
+        }
+    }
+
+    private void setCaseList2() {
+        for (int i = 0; i < 3; i++) {
+            Case case1 = new Case();
+            case1.setName("XXXXX案件名称");
+            case1.setPolices("张钰琪|王思佳");
+            case1.setType("行政处罚案件");
+            case1.setTime("2019/9/1");
+            case1.setState("已审批");
+            caseList2.add(case1);
+        }
     }
 
 }

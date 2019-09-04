@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:background="@color/white"
+    >
+
+    <View
+        android:id="@+id/point"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/background_oval_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="【张曦晨】"
+        app:layout_constraintLeft_toRightOf="@+id/point"
+        app:layout_constraintTop_toBottomOf="@+id/point"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:textColor="#1E387F"
+        />
+
+
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/name"
+        tools:text="2019/9/1"
+        android:textSize="16sp"
+        />
+
+
+    <TextView
+        android:id="@+id/polices_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="立案民警"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintLeft_toLeftOf="@+id/name"
+        android:layout_marginTop="15dp"
+        />
+
+    <TextView
+        android:id="@+id/polices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="张佳祺|王思佳"
+        android:textSize="16sp"
+        android:textColor="@color/text_color"
+        app:layout_constraintLeft_toRightOf="@+id/polices_text"
+        app:layout_constraintTop_toTopOf="@+id/polices_text"
+        android:layout_marginLeft="15dp"
+        />
+
+    <TextView
+        android:id="@+id/type_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="案件类型"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/polices_text"
+        app:layout_constraintLeft_toLeftOf="@+id/polices_text"
+        android:layout_marginTop="15dp"
+        />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="行政处罚案件"
+        android:textSize="16sp"
+        android:textColor="@color/text_color"
+        app:layout_constraintLeft_toRightOf="@+id/type_text"
+        app:layout_constraintTop_toTopOf="@+id/type_text"
+        android:layout_marginLeft="15dp"
+        />
+
+
+
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="审批"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/type_text"
+        android:background="@drawable/background_frame_solid_1"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+
+        />
+
+
+
+
+</android.support.constraint.ConstraintLayout>

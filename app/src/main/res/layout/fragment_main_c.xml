@@ -4,41 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:background="@drawable/fragment_c_bg">
+    >
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:background="@color/main_color"-->
-        <!--android:gravity="left|center"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:paddingLeft="20dp"-->
-        <!--android:paddingTop="15dp">-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fragment_c_bg"
+            android:layout_marginTop="-100dp"
+            android:layout_marginBottom="-100dp"
+            />
 
-        <!--<TextView-->
-            <!--android:id="@+id/tv_data_title"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:text="业务驾驶舱"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="28sp" />-->
 
-        <!--<TextView-->
-            <!--android:id="@+id/tv_badge"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="3dp"-->
-            <!--android:background="@drawable/circle_white"-->
-            <!--android:gravity="center"-->
-            <!--android:text=""-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:textSize="5sp" />-->
+    </ScrollView>
 
-    <!--</LinearLayout>-->
 
     <com.hjq.bar.TitleBar
         android:id="@+id/tb_test_bar"
@@ -51,39 +33,39 @@
         app:layout_collapseMode="pin"
         app:title="数据驾驶舱" />
 
-    <TextView android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:text="警综案件审批情况统计" />
+<!--    <TextView android:visibility="gone"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_marginBottom="5dp"-->
+<!--        android:gravity="center"-->
+<!--        android:textSize="20sp"-->
+<!--        android:text="警综案件审批情况统计" />-->
 
-    <ImageView android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/data1" />
+<!--    <ImageView android:visibility="gone"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:src="@mipmap/data1" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp" android:visibility="gone"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:text="指挥中心接警情况统计" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_marginBottom="5dp" android:visibility="gone"-->
+<!--        android:gravity="center"-->
+<!--        android:textSize="20sp"-->
+<!--        android:text="指挥中心接警情况统计" />-->
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:visibility="gone"
-        android:layout_weight="3"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/data2" />
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" android:visibility="gone"-->
+<!--        android:layout_weight="3"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:src="@mipmap/data2" />-->
 
 
     <!--<ImageView-->

@@ -18,6 +18,8 @@
         app:layout_constraintRight_toRightOf="parent"
         android:paddingTop="30dp"
         app:tabIndicatorHeight="0dp"
+        app:tabBackground="@android:color/transparent"
+        app:tabRippleColor="@android:color/transparent"
         />
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
