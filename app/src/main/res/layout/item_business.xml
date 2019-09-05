@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:background="@color/white"
+    >
+
+    <View
+        android:id="@+id/point"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/background_oval_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="【张曦晨】"
+        app:layout_constraintLeft_toRightOf="@+id/point"
+        app:layout_constraintTop_toBottomOf="@+id/point"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:textColor="#1E387F"
+        />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/name"
+        app:layout_constraintLeft_toRightOf="@+id/name"
+        tools:text="外出请假申请"
+        android:textSize="20sp"
+        android:textColor="@color/text_color"
+        />
+
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/name"
+        tools:text="2019/9/1"
+        android:textSize="16sp"
+        />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/leave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/duration_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时长"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="5天"
+            android:textSize="16sp"
+            android:textColor="@color/text_color"
+            app:layout_constraintLeft_toRightOf="@+id/duration_text"
+            app:layout_constraintTop_toTopOf="@+id/duration_text"
+            android:layout_marginLeft="15dp"
+            />
+
+
+        <TextView
+            android:id="@+id/reason_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="事由"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/duration_text"
+            app:layout_constraintLeft_toLeftOf="@+id/duration_text"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="回老家探亲，路程较远"
+            android:textSize="16sp"
+            android:textColor="@color/text_color"
+            app:layout_constraintLeft_toRightOf="@+id/reason_text"
+            app:layout_constraintTop_toTopOf="@+id/reason_text"
+            android:layout_marginLeft="15dp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/reason_text"
+            app:layout_constraintLeft_toLeftOf="@+id/reason_text"
+            android:orientation="horizontal"
+            android:background="@drawable/background_frame_hollow_1"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/time_img"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请假时间"
+                android:layout_marginLeft="5dp"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/leave_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="2019/8/8-2019/8/9"
+                android:textSize="14sp"
+                android:textColor="#313131"
+                android:layout_marginLeft="5dp"
+                />
+
+
+        </LinearLayout>
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        >
+
+
+        <TextView
+            android:id="@+id/money_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="报销金额"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2089"
+            android:textSize="16sp"
+            android:textColor="@color/text_color"
+            app:layout_constraintLeft_toRightOf="@+id/money_text"
+            app:layout_constraintTop_toTopOf="@+id/money_text"
+            android:layout_marginLeft="15dp"
+            />
+
+        <TextView
+            android:id="@+id/reason_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="报销事由"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/money_text"
+            app:layout_constraintTop_toBottomOf="@+id/money_text"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/reason2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="会议招待费"
+            android:textSize="16sp"
+            android:textColor="@color/text_color"
+            app:layout_constraintLeft_toRightOf="@+id/reason_text2"
+            app:layout_constraintTop_toTopOf="@+id/reason_text2"
+            android:layout_marginLeft="15dp"
+            />
+
+        <TextView
+            android:id="@+id/proof_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="报销凭证"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/reason_text2"
+            app:layout_constraintTop_toBottomOf="@+id/reason_text2"
+            android:layout_marginTop="10dp"
+            />
+
+       <ImageView
+           android:id="@+id/img"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           app:layout_constraintLeft_toRightOf="@+id/proof_text"
+           app:layout_constraintTop_toTopOf="@+id/proof_text"
+           app:layout_constraintBottom_toBottomOf="@+id/proof_text"
+           android:src="@mipmap/fujian"
+           android:layout_marginLeft="15dp"
+           />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/img"
+            app:layout_constraintTop_toTopOf="@+id/proof_text"
+            app:layout_constraintBottom_toBottomOf="@+id/proof_text"
+            android:text="报销发票.jpg"
+            android:layout_marginLeft="2dp"
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="审批"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/background_frame_solid_1"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+
+</android.support.constraint.ConstraintLayout>

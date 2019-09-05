@@ -170,6 +170,11 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.activity.BusinessReviewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            />
+
         <provider
             android:name=".email.provider.EmailConstantProvider"
             android:authorities="${applicationId}.emailconstantprovider" />

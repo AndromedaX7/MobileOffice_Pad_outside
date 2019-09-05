@@ -128,17 +128,18 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:visibility="gone">
-
+            android:visibility="visible"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
+                android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <TextView
                     android:id="@+id/title"
@@ -149,27 +150,17 @@
                     android:text="我的邮箱"
                     android:textSize="18sp" />
 
-                <LinearLayout
-                    android:id="@+id/class_id_01"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:tag="01">
-
-
-                    <TextView
-                        android:id="@+id/tv_mailbox_main_add"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@mipmap/sp_icon"
-                        android:drawablePadding="10dp"
-                        android:text="新增邮件"
-                        android:textColor="@color/colorButtonPressed"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_mailbox_main_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/sp_icon"
+                    android:drawablePadding="10dp"
+                    android:text="新增邮件"
+                    android:textColor="@color/colorButtonPressed"
+                    android:textSize="18sp" />
             </LinearLayout>
+
 
             <LinearLayout
 
@@ -722,7 +713,8 @@
             android:layout_weight="1"
             android:background="#f2f2f2"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -29,6 +29,7 @@ import com.mobilepolice.office.base.MyApplication;
 import com.mobilepolice.office.base.MyLazyFragment;
 import com.mobilepolice.office.bean.ApproveDetails;
 import com.mobilepolice.office.bean.ApproveList;
+import com.mobilepolice.office.bean.Business;
 import com.mobilepolice.office.bean.Case;
 import com.mobilepolice.office.bean.PendingApprove;
 import com.mobilepolice.office.bean.PendingWorkBean;
@@ -36,8 +37,10 @@ import com.mobilepolice.office.bean.SimpleBean;
 import com.mobilepolice.office.http.HttpConnectInterface;
 import com.mobilepolice.office.pdf.PdfSimpleUtil;
 import com.mobilepolice.office.ui.activity.ApproveDetailsActivity;
+import com.mobilepolice.office.ui.activity.BusinessReviewActivity;
 import com.mobilepolice.office.ui.activity.HandwrittenSignatureActivity;
 import com.mobilepolice.office.ui.adapter.ApproveAdapter;
+import com.mobilepolice.office.ui.adapter.BusinessAdapter;
 import com.mobilepolice.office.ui.adapter.CaseAdapter;
 import com.mobilepolice.office.ui.adapter.PendingApproveAdapter;
 import com.mobilepolice.office.ui.adapter.PendingWorkAdapter;
@@ -87,12 +90,23 @@ public class MainFragmentB extends MyLazyFragment {
     @BindView(R.id.checkedFinish_num)
     TextView checkedFinish_num;
 
+    @BindView(R.id.top_img1)
+    ImageView top_img1;
+    @BindView(R.id.top_img2)
+    ImageView top_img2;
+    @BindView(R.id.top_img3)
+    ImageView top_img3;
+
     private ApproveAdapter approveAdapter;
     private ApproveAdapter approveAdapter2;
     private CaseAdapter caseAdapter;
+    private BusinessAdapter businessAdapter;
 
     private List<Case> caseList = new ArrayList<>();
     private List<Case> caseList2 = new ArrayList<>();
+
+    private List<Business> businessList = new ArrayList<>();
+    private List<Business> businessList2 = new ArrayList<>();
     /*当前显示的tab索引*/
     int whichTab = 0;
     LinearLayout mask;
@@ -120,6 +134,7 @@ public class MainFragmentB extends MyLazyFragment {
 //        initPendingApproveAdapter();
         initApproveAdapter();
         initCaseAdapter();
+        initBusinessAdapter();
         initRecyclerView();
 
 //        requirePendingApproveTask(MyApplication.userCode);
@@ -164,8 +179,11 @@ public class MainFragmentB extends MyLazyFragment {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                 mRecyclerView.setAdapter(approveAdapter);
                 approveAdapter.setData(list1, "0");
-                check_num.setText("(" + list1.size() +")");
-                checkedFinish_num.setText("(" + caseList2.size() +")");
+                check_num.setText("(" + list1.size() + ")");
+                checkedFinish_num.setText("(" + caseList2.size() + ")");
+                top_img1.setVisibility(View.VISIBLE);
+                top_img2.setVisibility(View.GONE);
+                top_img3.setVisibility(View.GONE);
             }
         });
 
@@ -180,8 +198,13 @@ public class MainFragmentB extends MyLazyFragment {
                 ((TextView) findViewById(R.id.text2)).setTextColor(Color.parseColor("#6d6d6d"));
                 (findViewById(R.id.bar2)).setBackgroundColor(Color.parseColor("#ffffff"));
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                mRecyclerView.setAdapter(approveAdapter);
-                approveAdapter.setData(list2, "0");
+                mRecyclerView.setAdapter(businessAdapter);
+                businessAdapter.setData(businessList);
+                check_num.setText("(" + businessList.size() + ")");
+                checkedFinish_num.setText("(" + businessList2.size() + ")");
+                top_img1.setVisibility(View.GONE);
+                top_img2.setVisibility(View.VISIBLE);
+                top_img3.setVisibility(View.GONE);
             }
         });
         tab3.setOnClickListener(new View.OnClickListener() {
@@ -197,8 +220,11 @@ public class MainFragmentB extends MyLazyFragment {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 mRecyclerView.setAdapter(caseAdapter);
                 caseAdapter.setData(caseList);
-                check_num.setText("(" + caseList.size() +")");
-                checkedFinish_num.setText("(" + caseList2.size() +")");
+                check_num.setText("(" + caseList.size() + ")");
+                checkedFinish_num.setText("(" + caseList2.size() + ")");
+                top_img1.setVisibility(View.GONE);
+                top_img2.setVisibility(View.GONE);
+                top_img3.setVisibility(View.VISIBLE);
             }
         });
         /*已审批*/
@@ -224,7 +250,9 @@ public class MainFragmentB extends MyLazyFragment {
                         approveAdapter2.setData(list1, "1");
                         break;
                     case 1:
-                        approveAdapter2.setData(list2, "1");
+                        mRecyclerView.setAdapter(businessAdapter);
+                        businessAdapter.setData(businessList2);
+
                         break;
                     case 2:
                         mRecyclerView.setAdapter(caseAdapter);
@@ -256,7 +284,8 @@ public class MainFragmentB extends MyLazyFragment {
                         approveAdapter.setData(list1, "0");
                         break;
                     case 1:
-                        approveAdapter.setData(list2, "0");
+                        mRecyclerView.setAdapter(businessAdapter);
+                        businessAdapter.setData(businessList);
                         break;
                     case 2:
                         mRecyclerView.setAdapter(caseAdapter);
@@ -287,10 +316,13 @@ public class MainFragmentB extends MyLazyFragment {
         setList3Data();
 
         setCaseList();
-        setCaseList2();
+//        setCaseList2();
+
+        setBusinessList();
 
         approveAdapter.setData(list1, "0");
         caseAdapter.setData(caseList);
+        businessAdapter.setData(businessList);
         myRefresh();
     }
 
@@ -299,6 +331,7 @@ public class MainFragmentB extends MyLazyFragment {
         approveAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         approveAdapter2.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         caseAdapter.openLoadAnimation();
+        businessAdapter.openLoadAnimation();
 //        pendingApprove.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
     }
 
@@ -327,7 +360,7 @@ public class MainFragmentB extends MyLazyFragment {
 
     private void myRefresh() {
         mGwSize1.setText("(" + getListSize(list1, "0") + ")");
-        mGwSize2.setText("(" + getListSize(list2, "0") + ")");
+        mGwSize2.setText("(" + (businessList.size() + businessList2.size()) + ")");
         mGwSize3.setText("(" + (caseList.size() + caseList2.size()) + ")");
     }
 
@@ -392,6 +425,18 @@ public class MainFragmentB extends MyLazyFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
+            }
+        });
+    }
+
+    private void initBusinessAdapter() {
+        businessAdapter = new BusinessAdapter();
+        businessAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (position == 0) {
+                    startActivity(new Intent(getActivity(), BusinessReviewActivity.class));
+                }
             }
         });
     }
@@ -817,4 +862,38 @@ public class MainFragmentB extends MyLazyFragment {
         }
     }
 
+    private void setBusinessList() {
+        Business business1 = new Business();
+        business1.setName("张曦晨");
+        business1.setType("0");
+        business1.setTime("2019/9/1");
+        Business.Leave leave1 = new Business.Leave();
+        leave1.setLeaveTime("5天");
+        leave1.setReason("回老家探亲，路程较远");
+        leave1.setDuration("2019/8/8-2019/8/9");
+        business1.setLeave(leave1);
+        businessList.add(business1);
+
+        Business business2 = new Business();
+        business2.setName("王佳尔");
+        business2.setType("1");
+        business2.setTime("2019/9/1");
+        Business.Account account = new Business.Account();
+        account.setMoney("2089元");
+        account.setReason("会议招待费");
+        business2.setAccount(account);
+        businessList.add(business2);
+
+        Business business3 = new Business();
+        business3.setName("张曦晨");
+        business3.setType("0");
+        business3.setTime("2019/9/1");
+        Business.Leave leave2 = new Business.Leave();
+        leave2.setLeaveTime("5天");
+        leave2.setReason("回老家探亲，路程较远");
+        leave2.setDuration("2019/8/8-2019/8/9");
+        business3.setLeave(leave2);
+        businessList.add(business3);
+
+    }
 }

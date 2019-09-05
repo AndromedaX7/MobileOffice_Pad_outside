@@ -62,7 +62,7 @@ public class Business {
     /**
      * 请假
      */
-    public class Leave {
+    public static class Leave {
         private String duration;//时长
         private String reason;//事由
         private String LeaveTime;//请假时间
@@ -96,7 +96,7 @@ public class Business {
     /**
      * 报销
      */
-    public class Account {
+    public static class Account {
         private String money;//金额
         private String reason;//事由
         private String proof;//凭证

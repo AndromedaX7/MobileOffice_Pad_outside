@@ -51,7 +51,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -61,6 +61,14 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/waiting_btn1" />
 
+                    <ImageView
+                        android:id="@+id/top_img1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/top1"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="visible"
+                        />
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -106,6 +114,15 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/waiting_btn2" />
 
+                    <ImageView
+                        android:id="@+id/top_img2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/top3"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="gone"
+                        />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -150,6 +167,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/waiting_btn3" />
+
+                    <ImageView
+                        android:id="@+id/top_img3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/top2"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="gone"
+                        />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
